@@ -20,45 +20,14 @@ class SkeletonHomeUi extends ConsumerStatefulWidget {
 class _HomeSkeletonWidgetState extends ConsumerState<SkeletonHomeUi> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return SliverList(
+      delegate:SliverChildBuilderDelegate(
+        childCount: 10,
+        (context, index) {
+          return SkeletonVideoCardA();
+        },
 
 
-        backgroundColor:ref.read(themeModeNotifier.notifier)
-            .backgroundAppTheme(ref: ref),
-        body: SingleChildScrollView(
-          controller: widget.scrollController,
-          scrollDirection: Axis.vertical,
-          child: Column(
-            children: [
-              widget.hasCitiesBar ?? false
-                  ? const Column(
-                children: [
-                  SizedBox(
-                    height: 10,
-                  ),
-                  //cities skeleton
-                  SkeletonFilterWidget(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                ],
-              )
-                  : const SizedBox(),
-
-              const SkeletonVideoCardA(),
-              const SkeletonVideoCardA(),
-              const SkeletonVideoCardA(),
-              const SkeletonVideoCardA(),
-              const SkeletonVideoCardA(),
-              const SkeletonVideoCardA(),
-              const SkeletonVideoCardA(),
-              const SkeletonVideoCardA(),
-              const SkeletonVideoCardA(),
-              const SkeletonVideoCardA(),
-            ],
-          ),
-        ),
       ),
     );
   }

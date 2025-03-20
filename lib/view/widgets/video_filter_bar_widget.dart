@@ -63,14 +63,7 @@ class VideoFilterBarWidgetA extends ConsumerWidget {
     final filterProvider = ref.watch(videoFilterProvider.notifier);
     final selectedFilter = ref.watch(videoFilterProvider);
     final videoViewModel = ref.watch(videoNotifierProvider.notifier);
-    String viewsLabel =
-        SetLocalization.of(context)?.getTranslateValue("views") ?? "views";
-    String likesLabel =
-        SetLocalization.of(context)?.getTranslateValue("likes") ?? "likes";
-    String MLabel = SetLocalization.of(context)?.getTranslateValue("M") ?? "M";
-    String KLabel = SetLocalization.of(context)?.getTranslateValue("K") ?? "K";
-    String minuteLabel =
-        SetLocalization.of(context)?.getTranslateValue("minute") ?? "min";
+
     return Card(
       color: Colors.transparent,
       elevation: 0,
@@ -97,19 +90,15 @@ class VideoFilterBarWidgetA extends ConsumerWidget {
             title: "all_videos",
             isSelected: selectedFilter == EnumVideoDurationFilter.allVideos,
             onTap: () {
-              Future.microtask(() async {
+              WidgetsBinding.instance.addPostFrameCallback((_) async {
                 filterProvider.updateFilter(
                   EnumVideoDurationFilter.allVideos,
-                ); // Set to "All"
-                  await videoViewModel.getAllVideos(
-                    viewsLabel: viewsLabel,
-                    likesLabel: likesLabel,
-                    MLabel: MLabel,
-                    KLabel: KLabel,
-                    minuteLabel: minuteLabel,
-                    listPlayId: ref.watch(currentPlayListIdNotifier),
-                  );
+                );
+                await videoViewModel.getAllVideos(context:context,
+                  listPlayId: ref.watch(currentPlayListIdNotifier),
+                );
               });
+
               // Fetch all videos
             },
           ),
@@ -119,15 +108,14 @@ class VideoFilterBarWidgetA extends ConsumerWidget {
             isSelected: selectedFilter == EnumVideoDurationFilter.under30,
             onTap: () {
               filterProvider.updateFilter(EnumVideoDurationFilter.under30);
-                videoViewModel.getAllVideos(
-                  viewsLabel: viewsLabel,
-                  likesLabel: likesLabel,
-                  MLabel: MLabel,
-                  KLabel: KLabel,
-                  minuteLabel: minuteLabel,
+                videoViewModel.getAllVideos(context:context,
+                  
+                  
+                  
+                  
+                  
                   listPlayId: ref.watch(currentPlayListIdNotifier),
                 );
-                ref.read(isWidgetBuilt.notifier).state = false;
               }
               //
               // Fetch and filter videos
@@ -143,12 +131,12 @@ class VideoFilterBarWidgetA extends ConsumerWidget {
                 EnumVideoDurationFilter.between30And60,
               );
               Future.microtask(() {
-                videoViewModel.getAllVideos(
-                  viewsLabel: viewsLabel,
-                  likesLabel: likesLabel,
-                  MLabel: MLabel,
-                  KLabel: KLabel,
-                  minuteLabel: minuteLabel,
+                videoViewModel.getAllVideos(context:context,
+                  
+                  
+                  
+                  
+                  
                   listPlayId: ref.watch(currentPlayListIdNotifier),
                 );
               });
@@ -162,12 +150,12 @@ class VideoFilterBarWidgetA extends ConsumerWidget {
             onTap: () {
               filterProvider.updateFilter(EnumVideoDurationFilter.above60);
               Future.microtask(() {
-                videoViewModel.getAllVideos(
-                  viewsLabel: viewsLabel,
-                  likesLabel: likesLabel,
-                  MLabel: MLabel,
-                  KLabel: KLabel,
-                  minuteLabel: minuteLabel,
+                videoViewModel.getAllVideos(context:context,
+                  
+                  
+                  
+                  
+                  
                   listPlayId: ref.watch(currentPlayListIdNotifier),
                 );
               });

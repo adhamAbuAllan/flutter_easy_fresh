@@ -26,25 +26,12 @@ class _YouTubeVideoCardState extends ConsumerState<YouTubeVideoCard> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      String viewsLabel =
-          SetLocalization.of(context)?.getTranslateValue("views") ?? "views";
-      String likesLabel =
-          SetLocalization.of(context)?.getTranslateValue("likes") ?? "likes";
-      String MLabel = SetLocalization.of(context)?.getTranslateValue("M") ?? "M";
-      String KLabel = SetLocalization.of(context)?.getTranslateValue("K") ?? "K";
-      String minuteLabel =
-          SetLocalization.of(context)?.getTranslateValue("minute") ?? "min";
-
       Future.microtask(() {
         ref
             .read(videoNotifierProvider.notifier)
             .getAllVideos(
+              context: context,
               listPlayId: "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t",
-              viewsLabel: viewsLabel,
-              likesLabel: likesLabel,
-              MLabel: MLabel,
-              KLabel: KLabel,
-              minuteLabel: minuteLabel,
             );
       });
     });
@@ -52,12 +39,9 @@ class _YouTubeVideoCardState extends ConsumerState<YouTubeVideoCard> {
 
   @override
   Widget build(BuildContext context) {
-
     final videoState = ref.watch(videoNotifierProvider);
 
-    return videoState.loading
-        ? SkeletonHomeUi(hasCitiesBar: true)
-        : CustomScrollView(
+    return CustomScrollView(
           controller: widget.scrollController,
           physics: const ClampingScrollPhysics(),
 
@@ -73,7 +57,9 @@ class _YouTubeVideoCardState extends ConsumerState<YouTubeVideoCard> {
               ),
             ),
 
-            SliverList(
+            videoState.loading
+                ? SkeletonHomeUi(hasCitiesBar: false)
+                :    SliverList(
               delegate: SliverChildBuilderDelegate(
                 childCount: videoState.playListItems?.length,
                 (context, index) {

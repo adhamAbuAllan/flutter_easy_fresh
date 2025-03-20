@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 
 import '../../api/yt_video.dart';
 import '../../const/app_const.dart';
+import '../../const/localization.dart';
 
 class ParentVideoNotifier {
   String baseUrl = "https://www.googleapis.com/youtube/v3/playlistItems";
@@ -12,11 +13,7 @@ class ParentVideoNotifier {
 
   Future<List<VideoModel>> getAllVideosFromPlaylist({
     String? listPlayId,
-    required String viewsLabel,
-    required String likesLabel,
-    required String MLabel,
-    required String KLabel,
-    required String minuteLabel,
+ required BuildContext context
   }) async {
     if (listPlayId?.isEmpty ?? true) {
       listPlayId = "PLiMj4nUvC2JiDluqq4-qM8sqeCNIb7sL9";
@@ -79,7 +76,7 @@ class ParentVideoNotifier {
 
           String videoDuration = formatDuration(
             isoDuration,
-            minuteLabel: minuteLabel,
+            context: context,
           );
           debugPrint(
             "Formatted Video Duration for videoId $videoId: $videoDuration",
@@ -97,18 +94,13 @@ class ParentVideoNotifier {
             viewsCount: formatCounts(
               value: viewsCount,
               isViews: true,
-              viewsLabel: viewsLabel,
-              likesLabel: likesLabel,
-              MLabel: MLabel,
-              KLabel: KLabel,
+              context: context,
+
             ),
             likesCount: formatCounts(
               value: likeCount,
-              isViews: false,
-              viewsLabel: viewsLabel,
-              likesLabel:likesLabel,
-              MLabel: MLabel,
-              KLabel: KLabel,
+              isViews: false, context: context,
+
             ),
             videoDuration: videoDuration,
           );
@@ -245,27 +237,28 @@ class ParentVideoNotifier {
   String formatCounts({
     required String value,
     required bool isViews,
-    required String viewsLabel,
-    required String likesLabel,
-    required String MLabel,
-    required String KLabel,
+    required BuildContext context,
   }) {
     int viewsNum = int.tryParse(value) ?? 0;
 
     if (viewsNum >= 1000000000) {
-      return "${(viewsNum / 1000000000).toStringAsFixed(1)}B ${isViews ? viewsLabel : likesLabel}";
+      return "${(viewsNum / 1000000000).toStringAsFixed(1)}B ${isViews ? SetLocalization.of(context)?.getTranslateValue("views") : "likes"}";
     } else if (viewsNum >= 1000000) {
-      return "${(viewsNum / 1000000).toStringAsFixed(1)}$MLabel ${isViews ? viewsLabel : likesLabel}";
+      return "${(viewsNum / 1000000).toStringAsFixed(1)}${SetLocalization.of(context)?.getTranslateValue("M")} "
+          "${isViews ? SetLocalization.of(context)?.getTranslateValue("views") : SetLocalization.of(context)?.getTranslateValue("likes")}";
     } else if (viewsNum >= 1000) {
-      return "${(viewsNum / 1000).toStringAsFixed(1)}$KLabel ${isViews ? viewsLabel : likesLabel}";
+      return "${(viewsNum / 1000).toStringAsFixed(1)}"
+          "${SetLocalization.of(context)?.getTranslateValue("K")}"
+          " ${isViews ? SetLocalization.of(context)?.getTranslateValue("views") : SetLocalization.of(context)?.getTranslateValue("likes")}";
     } else if (viewsNum >= 100) {
-      return "${(viewsNum / 1).toStringAsFixed(0)} $viewsLabel";
+      return "${(viewsNum / 1).toStringAsFixed(0)}"
+          " ${isViews ? SetLocalization.of(context)?.getTranslateValue("views") : SetLocalization.of(context)?.getTranslateValue("likes")}";
     } else {
       return value;
     }
   }
 
-  String formatDuration(String isoDuration, {required String minuteLabel}) {
+  String formatDuration(String isoDuration, {required BuildContext context}) {
     RegExp regExp = RegExp(r"PT(\d+H)?(\d+M)?(\d+S)?");
     var matches = regExp.firstMatch(isoDuration);
 
@@ -282,8 +275,9 @@ class ParentVideoNotifier {
     }
 
     int totalMinutes = hours * 60 + minutes;
-    return "$totalMinutes $minuteLabel";
+    return " $totalMinutes ${SetLocalization.of(context)?.getTranslateValue("minute")}";
   }
+}
 
 /*
   String formatCounts({
@@ -331,4 +325,4 @@ class ParentVideoNotifier {
   }
 }
   */
-}
+

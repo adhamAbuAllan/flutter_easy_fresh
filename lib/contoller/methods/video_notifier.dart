@@ -25,20 +25,12 @@ class VideoFilterNotifier extends StateNotifier<VideoState> {
 
   Future<void> getAllVideos({
     String? listPlayId,
-    required String viewsLabel,
-    required String likesLabel,
-    required String MLabel,
-    required String KLabel,
-    required String minuteLabel,
+required BuildContext context
   }) async {
     state = state.copyWith(loading: true);
     List<VideoModel> allVideos = await ParentVideoNotifier()
         .getAllVideosFromPlaylist(listPlayId: listPlayId,
-      viewsLabel: viewsLabel,
-      likesLabel: likesLabel,
-      MLabel: MLabel,
-      KLabel: KLabel,
-      minuteLabel: minuteLabel,
+context: context
     );
     ref.read(currentPlayListIdNotifier.notifier).state =
         listPlayId ?? "PLiMj4nUvC2JiDluqq4-qM8sqeCNIb7sL9";

@@ -121,21 +121,21 @@ class TypeRowOfLevelOne extends ConsumerWidget {
               if (NewSession.get("language", "") == "ar") {
                 ref
                     .watch(videoNotifierProvider.notifier)
-                    .getAllVideos(     viewsLabel: viewsLabel,
-                  likesLabel: likesLabel,
-                  MLabel: MLabel,
-                  KLabel: KLabel,
-                  minuteLabel: minuteLabel,
+                    .getAllVideos(context:context,     
+                  
+                  
+                  
+                  
                       listPlayId: "PLFky0QidIsRVe6LCB_AmakRBALyqDOdN9",
                     );
               } else {
                 ref
                     .watch(videoNotifierProvider.notifier)
-                    .getAllVideos(     viewsLabel: viewsLabel,
-      likesLabel: likesLabel,
-      MLabel: MLabel,
-      KLabel: KLabel,
-      minuteLabel: minuteLabel,
+                    .getAllVideos(context:context,     
+      
+      
+      
+      
                       listPlayId: "PLFky0QidIsRXWOwxtSerlqeRtaHM7XMt_",
                     );
               }
@@ -200,7 +200,7 @@ class TypeRowOfLevelTwo extends ConsumerWidget {
                           }
                           ref
                               .watch(videoNotifierProvider.notifier)
-                              .getAllVideos(
+                              .getAllVideos(context:context,
                                 listPlayId:
                                     "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t",
                               );
@@ -212,22 +212,22 @@ class TypeRowOfLevelTwo extends ConsumerWidget {
               if (NewSession.get("language", "") == "ar") {
                 ref
                     .watch(videoNotifierProvider.notifier)
-                    .getAllVideos(     viewsLabel: viewsLabel,
-      likesLabel: likesLabel,
-      MLabel: MLabel,
-      KLabel: KLabel,
-      minuteLabel: minuteLabel,
+                    .getAllVideos(context:context,     
+      
+      
+      
+      
                       listPlayId: "PLFky0QidIsRU6hwTIVSUSIGHw-3iPBlHy",
                     );
 
               } else {
                 ref
                     .watch(videoNotifierProvider.notifier)
-                    .getAllVideos(     viewsLabel: viewsLabel,
-      likesLabel: likesLabel,
-      MLabel: MLabel,
-      KLabel: KLabel,
-      minuteLabel: minuteLabel,
+                    .getAllVideos(context:context,     
+      
+      
+      
+      
                       listPlayId: "PLFky0QidIsRX9imrxA4cmg_FcY9h9TTWH",
                     );
               }
@@ -291,7 +291,7 @@ class TypeRowOfLevelThree extends ConsumerWidget {
                           }
                           ref
                               .watch(videoNotifierProvider.notifier)
-                              .getAllVideos(
+                              .getAllVideos(context:context,
                                 listPlayId:
                                     "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t",
                               );
@@ -302,20 +302,20 @@ class TypeRowOfLevelThree extends ConsumerWidget {
               if (NewSession.get("language", "") == "ar") {
                 ref
                     .watch(videoNotifierProvider.notifier)
-                    .getAllVideos(     viewsLabel: viewsLabel,
-      likesLabel: likesLabel,
-      MLabel: MLabel,
-      KLabel: KLabel,
-      minuteLabel: minuteLabel,
+                    .getAllVideos(context:context,     
+      
+      
+      
+      
                   listPlayId: "PLFky0QidIsRVNWtfMFszywLppLgTfa4I2",
                 );              } else {
                 ref
                     .watch(videoNotifierProvider.notifier)
-                    .getAllVideos(     viewsLabel: viewsLabel,
-      likesLabel: likesLabel,
-      MLabel: MLabel,
-      KLabel: KLabel,
-      minuteLabel: minuteLabel,
+                    .getAllVideos(context:context,     
+      
+      
+      
+      
                       listPlayId: "PLFky0QidIsRXF6rZbVp4xe9ueBEec3Lnv",
                     );
               }
@@ -368,11 +368,11 @@ class TypeRowOfLevelFour extends ConsumerWidget {
             WidgetsBinding.instance.addPostFrameCallback((_) async {
               ref
                   .watch(videoNotifierProvider.notifier)
-                  .getAllVideos(     viewsLabel: viewsLabel,
-      likesLabel: likesLabel,
-      MLabel: MLabel,
-      KLabel: KLabel,
-      minuteLabel: minuteLabel,
+                  .getAllVideos(context:context,     
+      
+      
+      
+      
                     listPlayId: "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t",
                   );
             });
@@ -389,7 +389,7 @@ class TypeRowOfLevelFour extends ConsumerWidget {
                           }
                           ref
                               .watch(videoNotifierProvider.notifier)
-                              .getAllVideos(
+                              .getAllVideos(context:context,
                                 listPlayId:
                                     "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t",
                               );
