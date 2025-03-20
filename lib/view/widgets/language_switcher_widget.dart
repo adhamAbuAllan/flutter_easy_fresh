@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easy_fresh/contoller/providers/video_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../session/new_session.dart';
 import '../../const/coordination.dart';
@@ -24,7 +25,7 @@ class LanguageSwitcherWidget extends ConsumerWidget {
       // leading: icon ,
       leading: Icon(
         Icons.language_outlined,
-        size:  32,
+        size: 32,
         color: ref.read(themeModeNotifier.notifier).textTheme(ref: ref),
       ),
 
@@ -69,6 +70,12 @@ class ArabicButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    String viewsLabel = SetLocalization.of(context)?.getTranslateValue("views") ?? "views";
+    String likesLabel = SetLocalization.of(context)?.getTranslateValue("likes") ?? "likes";
+    String MLabel = SetLocalization.of(context)?.getTranslateValue("M") ?? "M";
+    String KLabel = SetLocalization.of(context)?.getTranslateValue("K") ?? "K";
+    String minuteLabel = SetLocalization.of(context)?.getTranslateValue("minute") ?? "min";
+
     ///  inActive width button
     var inActiveWidthButton = ref.read(
       widthSizeWithInActiveArButton,
@@ -134,6 +141,70 @@ class ArabicButton extends ConsumerWidget {
             //that should use a switch , to check current level, that when
             // change the language, that should keep in current level even
             // else the language is changed
+
+            final currentId = ref.read(currentPlayListIdNotifier);
+
+            switch (currentId) {
+              case 'PLFky0QidIsRXWOwxtSerlqeRtaHM7XMt_': // Replace with actual ID
+                ref
+                    .watch(videoNotifierProvider.notifier)
+                    .getAllVideos(     viewsLabel: viewsLabel,
+                  likesLabel: likesLabel,
+                  MLabel: MLabel,
+                  KLabel: KLabel,
+                  minuteLabel: minuteLabel,
+                  listPlayId: "PLFky0QidIsRVe6LCB_AmakRBALyqDOdN9",
+                );
+                break;
+              case 'PLFky0QidIsRX9imrxA4cmg_FcY9h9TTWH': // Replace with actual ID
+
+                ref
+                    .watch(videoNotifierProvider.notifier)
+                    .getAllVideos(     viewsLabel: viewsLabel,
+                  likesLabel: likesLabel,
+                  MLabel: MLabel,
+                  KLabel: KLabel,
+                  minuteLabel: minuteLabel,
+                  listPlayId: "PLFky0QidIsRU6hwTIVSUSIGHw-3iPBlHy",
+                );
+
+                break;
+              case 'PLFky0QidIsRXF6rZbVp4xe9ueBEec3Lnv': // Replace with actual ID
+
+                ref
+                    .watch(videoNotifierProvider.notifier)
+                    .getAllVideos(     viewsLabel: viewsLabel,
+                  likesLabel: likesLabel,
+                  MLabel: MLabel,
+                  KLabel: KLabel,
+                  minuteLabel: minuteLabel,
+                  listPlayId: "PLFky0QidIsRVNWtfMFszywLppLgTfa4I2",
+                );
+
+                break;
+              case 'PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t': // Replace with actual ID
+
+                ref
+                    .watch(videoNotifierProvider.notifier)
+                    .getAllVideos(     viewsLabel: viewsLabel,
+                  likesLabel: likesLabel,
+                  MLabel: MLabel,
+                  KLabel: KLabel,
+                  minuteLabel: minuteLabel,
+                  listPlayId: "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t",
+                );
+
+                break;
+              default:
+                // Handle case where no level is active
+                break;
+            }
+
+            if (NewSession.get("language", "ar") == "ar") {
+              return;
+            }
+
+            NewSession.save("language", "ar");
           });
           if (NewSession.get("language", "ar") == "ar") {
             return;
@@ -179,6 +250,12 @@ class EnglishButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    String viewsLabel = SetLocalization.of(context)?.getTranslateValue("views") ?? "views";
+    String likesLabel = SetLocalization.of(context)?.getTranslateValue("likes") ?? "likes";
+    String MLabel = SetLocalization.of(context)?.getTranslateValue("M") ?? "M";
+    String KLabel = SetLocalization.of(context)?.getTranslateValue("K") ?? "K";
+    String minuteLabel = SetLocalization.of(context)?.getTranslateValue("minute") ?? "min";
+
     ///  inActive width button
     var inActiveWidthButton = ref.read(
       widthSizeWithInActiveEnButton,
@@ -212,6 +289,67 @@ class EnglishButton extends ConsumerWidget {
             //that should use a switch , to check current level, that when
             // change the language, that should keep in current level even
             // else the language is changed
+
+            final currentId = ref.read(currentPlayListIdNotifier);
+
+            switch (currentId) {
+              case 'PLFky0QidIsRVe6LCB_AmakRBALyqDOdN9': // Replace with actual ID
+                ref
+                    .watch(videoNotifierProvider.notifier)
+                    .getAllVideos(     viewsLabel: viewsLabel,
+                  likesLabel: likesLabel,
+                  MLabel: MLabel,
+                  KLabel: KLabel,
+                  minuteLabel: minuteLabel,
+                  listPlayId:"PLFky0QidIsRXWOwxtSerlqeRtaHM7XMt_"
+                  ,
+                );
+                break;
+              case 'PLFky0QidIsRU6hwTIVSUSIGHw-3iPBlHy': // Replace with actual ID
+
+                ref
+                    .watch(videoNotifierProvider.notifier)
+                    .getAllVideos(     viewsLabel: viewsLabel,
+                  likesLabel: likesLabel,
+                  MLabel: MLabel,
+                  KLabel: KLabel,
+                  minuteLabel: minuteLabel,
+                  listPlayId: "PLFky0QidIsRX9imrxA4cmg_FcY9h9TTWH"
+                  ,
+                );
+
+                break;
+              case 'PLFky0QidIsRVNWtfMFszywLppLgTfa4I2': // Replace with actual ID
+
+                ref
+                    .watch(videoNotifierProvider.notifier)
+                    .getAllVideos(     viewsLabel: viewsLabel,
+                  likesLabel: likesLabel,
+                  MLabel: MLabel,
+                  KLabel: KLabel,
+                  minuteLabel: minuteLabel,
+                  listPlayId: "PLFky0QidIsRXF6rZbVp4xe9ueBEec3Lnv"
+                  ,
+                );
+
+                break;
+              case 'PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t': // Replace with actual ID
+
+                ref
+                    .watch(videoNotifierProvider.notifier)
+                    .getAllVideos(     viewsLabel: viewsLabel,
+                  likesLabel: likesLabel,
+                  MLabel: MLabel,
+                  KLabel: KLabel,
+                  minuteLabel: minuteLabel,
+                  listPlayId: "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t",
+                );
+
+                break;
+              default:
+              // Handle case where no level is active
+                break;
+            }
           });
 
           if (NewSession.get("language", "en") == "en") {

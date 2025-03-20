@@ -284,4 +284,51 @@ class ParentVideoNotifier {
     int totalMinutes = hours * 60 + minutes;
     return "$totalMinutes $minuteLabel";
   }
+
+/*
+  String formatCounts({
+    required String value,
+    required bool isViews,
+    required BuildContext context,
+  }) {
+    int viewsNum = int.tryParse(value) ?? 0;
+
+    if (viewsNum >= 1000000000) {
+      return "${(viewsNum / 1000000000).toStringAsFixed(1)}B ${isViews ? SetLocalization.of(context)?.getTranslateValue("views") : "likes"}";
+    } else if (viewsNum >= 1000000) {
+      return "${(viewsNum / 1000000).toStringAsFixed(1)}${SetLocalization.of(context)?.getTranslateValue("M")} "
+          "${isViews ? SetLocalization.of(context)?.getTranslateValue("views") : SetLocalization.of(context)?.getTranslateValue("likes")}";
+    } else if (viewsNum >= 1000) {
+      return "${(viewsNum / 1000).toStringAsFixed(1)}"
+          "${SetLocalization.of(context)?.getTranslateValue("K")}"
+          " ${isViews ? SetLocalization.of(context)?.getTranslateValue("views") : SetLocalization.of(context)?.getTranslateValue("likes")}";
+    } else if (viewsNum >= 100) {
+      return "${(viewsNum / 1).toStringAsFixed(0)}"
+          " ${isViews ? SetLocalization.of(context)?.getTranslateValue("views") : SetLocalization.of(context)?.getTranslateValue("likes")}";
+    } else {
+      return value;
+    }
+  }
+
+  String formatDuration(String isoDuration, {required BuildContext context}) {
+    RegExp regExp = RegExp(r"PT(\d+H)?(\d+M)?(\d+S)?");
+    var matches = regExp.firstMatch(isoDuration);
+
+    int hours = 0, minutes = 0, seconds = 0;
+
+    if (matches != null) {
+      hours = int.tryParse(matches.group(1)?.replaceAll("H", "") ?? "0") ?? 0;
+      minutes = int.tryParse(matches.group(2)?.replaceAll("M", "") ?? "0") ?? 0;
+      seconds = int.tryParse(matches.group(3)?.replaceAll("S", "") ?? "0") ?? 0;
+    }
+
+    if (hours == 0 && minutes == 0 && seconds == 0) {
+      return "Unavailable";
+    }
+
+    int totalMinutes = hours * 60 + minutes;
+    return " $totalMinutes ${SetLocalization.of(context)?.getTranslateValue("minute")}";
+  }
+}
+  */
 }
