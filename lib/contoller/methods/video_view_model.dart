@@ -3,8 +3,6 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../api/yt_video.dart';
 import '../../const/app_const.dart';
 
@@ -12,120 +10,262 @@ class ParentVideoNotifier {
   String baseUrl = "https://www.googleapis.com/youtube/v3/playlistItems";
   late Uri uri;
 
-  Future<List<YtVideo>> getAllVideosFromPlaylist({
-    String? listPlayId
+  Future<List<VideoModel>> getAllVideosFromPlaylist({
+    String? listPlayId,
+    required String viewsLabel,
+    required String likesLabel,
+    required String MLabel,
+    required String KLabel,
+    required String minuteLabel,
   }) async {
-    try {
+    if (listPlayId?.isEmpty ?? true) {
+      listPlayId = "PLiMj4nUvC2JiDluqq4-qM8sqeCNIb7sL9";
+    }
+    debugPrint("Fetching videos for playlist ID: $listPlayId");
 
-      if (listPlayId?.isEmpty ?? true) {
-        listPlayId = "PLiMj4nUvC2JiDluqq4-qM8sqeCNIb7sL9";
+    List<VideoModel> allVideos = [];
+
+    uri = Uri.parse(
+      "$baseUrl?part=snippet&playlistId=$listPlayId&key=${ApiKeys.youtubeApiKey}",
+    );
+
+    var response = await http.get(uri);
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      if (jsonData['items'] == null) {
+        debugPrint("No videos found for playlist ID: $listPlayId");
+        return [];
       }
-      debugPrint("Fetching videos for playlist ID: $listPlayId");
+      List playListItems = jsonData['items'];
 
-      List<YtVideo> allVideos = [];
-
-      uri = Uri.parse(
-        "$baseUrl?part=snippet&playlistId=$listPlayId&key=${ApiKeys.youtubeApiKey}",
-      );
-
-      var response = await http.get(uri);
-      if (response.statusCode == 200) {
-        var jsonData = jsonDecode(response.body);
-        if (jsonData['items'] == null) {
-          debugPrint("No videos found for playlist ID: $listPlayId");
-          return [];
+      for (var videoData in playListItems) {
+        var videoId = videoData['snippet']['resourceId']?['videoId'] ?? "";
+        if (videoId.isEmpty) {
+          debugPrint("Skipping video with missing videoId");
+          continue;
         }
-        List playListItems = jsonData['items'];
 
-        for (var videoData in playListItems) {
-          var videoId = videoData['snippet']['resourceId']?['videoId'] ?? "";
-          if (videoId.isEmpty) {
-            debugPrint("Skipping video with missing videoId");
-            continue;
-          }
-
-          var statsResponse = await http.get(
-            Uri.parse(
-              "https://www.googleapis.com/youtube/v3/videos?part=statistics&id=$videoId&key=${ApiKeys.youtubeApiKey}",
-            ),
-          );
-
-          var statsData = jsonDecode(statsResponse.body);
-          String viewsCount = statsData['items'].isNotEmpty
-              ? (statsData['items'][0]['statistics']['viewCount'] ?? "0")
-              : "0";
-
-          String likeCount = statsData['items'].isNotEmpty
-              ? (statsData['items'][0]['statistics']['likeCount'] ?? "0")
-              : "0";
-
-          var contentDetailsResponse = await http.get(
-            Uri.parse(
-              "https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=$videoId&key=${ApiKeys.youtubeApiKey}",
-            ),
-          );
-
-          var contentDetailsData = jsonDecode(contentDetailsResponse.body);
-
-          if (contentDetailsData['items'] != null &&
-              contentDetailsData['items'].isNotEmpty) {
-            var duration = contentDetailsData['items'][0]['contentDetails'];
-            String isoDuration = duration['duration'];
-
-            debugPrint("Raw Video Duration for videoId $videoId: $isoDuration");
-
-            String videoDuration = formatDuration(isoDuration);
-            debugPrint(
-              "Formatted Video Duration for videoId $videoId: $videoDuration",
-            );
-
-            String thumbnailUrl = videoData['snippet']['thumbnails']['maxres']
-                    ?['url'] ??
-                videoData['snippet']['thumbnails']['high']?['url'] ??
-                "";
-
-            YtVideo video = YtVideo(
-              videoId: videoId,
-              videoTitle: videoData['snippet']['title'],
-              thumbnailUrl: thumbnailUrl,
-              viewsCount: formatCounts(value: viewsCount, isViews: true),
-              likesCount: formatCounts(value: likeCount, isViews: false),
-              videoDuration: videoDuration,
-            );
-
-            allVideos.add(video);
-          } else {
-            debugPrint("No content details found for videoId $videoId");
-          }
-        }
-        return allVideos; // ✅ Always return the list
-      } else {
-        log(
-          "Unable to get data from YouTube API, status code: ${response.statusCode}, body: ${response.body}",
+        var statsResponse = await http.get(
+          Uri.parse(
+            "https://www.googleapis.com/youtube/v3/videos?part=statistics&id=$videoId&key=${ApiKeys.youtubeApiKey}",
+          ),
         );
+
+        var statsData = jsonDecode(statsResponse.body);
+        String viewsCount =
+            statsData['items'].isNotEmpty
+                ? (statsData['items'][0]['statistics']['viewCount'] ?? "0")
+                : "0";
+
+        String likeCount =
+            statsData['items'].isNotEmpty
+                ? (statsData['items'][0]['statistics']['likeCount'] ?? "0")
+                : "0";
+
+        var contentDetailsResponse = await http.get(
+          Uri.parse(
+            "https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=$videoId&key=${ApiKeys.youtubeApiKey}",
+          ),
+        );
+
+        var contentDetailsData = jsonDecode(contentDetailsResponse.body);
+
+        if (contentDetailsData['items'] != null &&
+            contentDetailsData['items'].isNotEmpty) {
+          var duration = contentDetailsData['items'][0]['contentDetails'];
+          String isoDuration = duration['duration'];
+
+          debugPrint("Raw Video Duration for videoId $videoId: $isoDuration");
+
+          String videoDuration = formatDuration(
+            isoDuration,
+            minuteLabel: minuteLabel,
+          );
+          debugPrint(
+            "Formatted Video Duration for videoId $videoId: $videoDuration",
+          );
+
+          String thumbnailUrl =
+              videoData['snippet']['thumbnails']['maxres']?['url'] ??
+              videoData['snippet']['thumbnails']['high']?['url'] ??
+              "";
+
+          VideoModel video = VideoModel(
+            videoId: videoId,
+            videoTitle: videoData['snippet']['title'],
+            thumbnailUrl: thumbnailUrl,
+            viewsCount: formatCounts(
+              value: viewsCount,
+              isViews: true,
+              viewsLabel: viewsLabel,
+              likesLabel: likesLabel,
+              MLabel: MLabel,
+              KLabel: KLabel,
+            ),
+            likesCount: formatCounts(
+              value: likeCount,
+              isViews: false,
+              viewsLabel: viewsLabel,
+              likesLabel:likesLabel,
+              MLabel: MLabel,
+              KLabel: KLabel,
+            ),
+            videoDuration: videoDuration,
+          );
+
+          allVideos.add(video);
+          debugPrint("allVideos length: ${allVideos.length}");
+        } else {
+          debugPrint("No content details found for videoId $videoId");
+        }
       }
-    } catch (e) {
-      log("Error fetching data from YouTube API: $e");
+
+      // Fetch the next page token if available
+    } else {
+      log(
+        "Unable to get data from YouTube API, status code: ${response.statusCode}, body: ${response.body}",
+      );
     }
 
-    return []; // ✅ Ensure a return value in case of an error
+    return allVideos;
   }
 
-  String formatCounts({required String value, required bool isViews}) {
+  // try {
+  //
+  //   if (listPlayId?.isEmpty ?? true) {
+  //     listPlayId = "PLiMj4nUvC2JiDluqq4-qM8sqeCNIb7sL9";
+  //   }
+  //   debugPrint("Fetching videos for playlist ID: $listPlayId");
+  //
+  //   List<VideoModel> allVideos = [];
+  //
+  //
+  //   uri = Uri.parse(
+  //     "$baseUrl?part=snippet&playlistId=$listPlayId&key=${ApiKeys
+  //         .youtubeApiKey}",
+  //   );
+  //
+  //   var response = await http.get(uri);
+  //   if (response.statusCode == 200) {
+  //     var jsonData = jsonDecode(response.body);
+  //     if (jsonData['items'] == null) {
+  //       debugPrint("No videos found for playlist ID: $listPlayId");
+  //       return [];
+  //     }
+  //     List playListItems = jsonData['items'];
+  //
+  //     for (var videoData in playListItems) {
+  //       var videoId = videoData['snippet']['resourceId']?['videoId'] ?? "";
+  //       if (videoId.isEmpty) {
+  //         debugPrint("Skipping video with missing videoId");
+  //         continue;
+  //       }
+  //
+  //       var statsResponse = await http.get(
+  //         Uri.parse(
+  //           "https://www.googleapis.com/youtube/v3/videos?part=statistics&id=$videoId&key=${ApiKeys.youtubeApiKey}",
+  //         ),
+  //       );
+  //
+  //       var statsData = jsonDecode(statsResponse.body);
+  //       String viewsCount = statsData['items'].isNotEmpty
+  //           ? (statsData['items'][0]['statistics']['viewCount'] ?? "0")
+  //           : "0";
+  //
+  //       String likeCount = statsData['items'].isNotEmpty
+  //           ? (statsData['items'][0]['statistics']['likeCount'] ?? "0")
+  //           : "0";
+  //
+  //       var contentDetailsResponse = await http.get(
+  //         Uri.parse(
+  //           "https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=$videoId&key=${ApiKeys.youtubeApiKey}",
+  //         ),
+  //       );
+  //
+  //       var contentDetailsData = jsonDecode(contentDetailsResponse.body);
+  //
+  //       if (contentDetailsData['items'] != null &&
+  //           contentDetailsData['items'].isNotEmpty) {
+  //         var duration = contentDetailsData['items'][0]['contentDetails'];
+  //         String isoDuration = duration['duration'];
+  //
+  //           debugPrint(
+  //             "Raw Video Duration for videoId $videoId: $isoDuration",
+  //           );
+  //
+  //           String videoDuration = formatDuration(isoDuration,context: context);
+  //           debugPrint(
+  //             "Formatted Video Duration for videoId $videoId: $videoDuration",
+  //           );
+  //
+  //         String thumbnailUrl = videoData['snippet']['thumbnails']['maxres']
+  //                 ?['url'] ??
+  //             videoData['snippet']['thumbnails']['high']?['url'] ??
+  //             "";
+  //
+  //           VideoModel video = VideoModel(
+  //             videoId: videoId,
+  //             videoTitle: videoData['snippet']['title'],
+  //             thumbnailUrl: thumbnailUrl,
+  //             viewsCount: formatCounts(
+  //               value: viewsCount,
+  //               isViews: true,
+  //               context: context,
+  //             ),
+  //             likesCount: formatCounts(
+  //               value: likeCount,
+  //               isViews: false,
+  //               context: context,
+  //             ),
+  //             videoDuration: videoDuration,
+  //           );
+  //
+  //           allVideos.add(video);
+  //           debugPrint("allVideos length: ${allVideos.length}");
+  //         } else {
+  //           debugPrint("No content details found for videoId $videoId");
+  //         }
+  //       }
+  //
+  //       // Fetch the next page token if available
+  //     } else {
+  //       log(
+  //         "Unable to get data from YouTube API, status code: ${response.statusCode}, body: ${response.body}",
+  //       );
+  //     }
+  //
+  //   return allVideos;
+  // }
+  // catch (e) {
+  //     log("Error fetching data from YouTube API: $e");
+  //   }
+  //
+  //   return [];
+  // }
+  String formatCounts({
+    required String value,
+    required bool isViews,
+    required String viewsLabel,
+    required String likesLabel,
+    required String MLabel,
+    required String KLabel,
+  }) {
     int viewsNum = int.tryParse(value) ?? 0;
 
     if (viewsNum >= 1000000000) {
-      return "${(viewsNum / 1000000000).toStringAsFixed(1)}B ${isViews ? "views" : "likes"}";
+      return "${(viewsNum / 1000000000).toStringAsFixed(1)}B ${isViews ? viewsLabel : likesLabel}";
     } else if (viewsNum >= 1000000) {
-      return "${(viewsNum / 1000000).toStringAsFixed(1)}M ${isViews ? "views" : "likes"}";
+      return "${(viewsNum / 1000000).toStringAsFixed(1)}$MLabel ${isViews ? viewsLabel : likesLabel}";
     } else if (viewsNum >= 1000) {
-      return "${(viewsNum / 1000).toStringAsFixed(1)}K ${isViews ? "views" : "likes"}";
+      return "${(viewsNum / 1000).toStringAsFixed(1)}$KLabel ${isViews ? viewsLabel : likesLabel}";
+    } else if (viewsNum >= 100) {
+      return "${(viewsNum / 1).toStringAsFixed(0)} $viewsLabel";
     } else {
       return value;
     }
   }
 
-  String formatDuration(String isoDuration) {
+  String formatDuration(String isoDuration, {required String minuteLabel}) {
     RegExp regExp = RegExp(r"PT(\d+H)?(\d+M)?(\d+S)?");
     var matches = regExp.firstMatch(isoDuration);
 
@@ -142,6 +282,6 @@ class ParentVideoNotifier {
     }
 
     int totalMinutes = hours * 60 + minutes;
-    return "$totalMinutes m ${seconds}s";
+    return "$totalMinutes $minuteLabel";
   }
 }

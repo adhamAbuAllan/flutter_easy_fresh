@@ -1,4 +1,4 @@
-class YtVideo {
+class VideoModel {
 
   final String videoId;
   final String videoTitle;
@@ -7,7 +7,7 @@ class YtVideo {
   final String likesCount;
   final String? videoDuration;
 
-  YtVideo({required this.videoId, required this.videoTitle, required this.thumbnailUrl, required this.viewsCount, required this.likesCount,
+  VideoModel({required this.videoId, required this.videoTitle, required this.thumbnailUrl, required this.viewsCount, required this.likesCount,
     this.videoDuration}
       );
 

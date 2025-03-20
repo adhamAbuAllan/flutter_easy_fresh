@@ -15,15 +15,16 @@ class LanguageSwitcherWidget extends ConsumerWidget {
     return ListTile(
       iconColor: ref.read(themeModeNotifier.notifier).textTheme(ref: ref),
       dense: getIt<AppDimension>().isSmallScreen(context),
-      splashColor:
-          ref.read(themeModeNotifier.notifier).backgroundAppTheme(ref: ref),
-      // minVerticalPadding: ,
+      splashColor: ref
+          .read(themeModeNotifier.notifier)
+          .backgroundAppTheme(ref: ref),
 
-      contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+      // minVerticalPadding: ,
+      contentPadding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
       // leading: icon ,
       leading: Icon(
         Icons.language_outlined,
-        size: getIt<AppDimension>().isSmallScreen(context) ? 32 - 5 : 32,
+        size:  32,
         color: ref.read(themeModeNotifier.notifier).textTheme(ref: ref),
       ),
 
@@ -32,7 +33,7 @@ class LanguageSwitcherWidget extends ConsumerWidget {
         SetLocalization.of(context)!.getTranslateValue("language"),
         style: TextStyle(
           fontSize: getIt<AppDimension>().isSmallScreen(context) ? 14 : 16,
-          color: ref.read(themeModeNotifier.notifier).textTheme(ref: ref)
+          color: ref.read(themeModeNotifier.notifier).textTheme(ref: ref),
         ),
       ),
       trailing: const Column(
@@ -49,20 +50,17 @@ class LanguageSwitcherWidget extends ConsumerWidget {
             children: [
               /// buttons
               ArabicButton(),
-              SizedBox(width: 20),
+              SizedBox(width: 10),
 
               EnglishButton(),
-              // Spacing between buttons
 
-              SizedBox(
-                width: 10,
-              )
+              // Spacing between buttons
+              // SizedBox(width: 10),
             ],
           ),
         ],
       ),
     );
-
   }
 }
 
@@ -72,29 +70,70 @@ class ArabicButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ///  inActive width button
-    var inActiveWidthButton =
-        ref.read(widthSizeWithInActiveArButton); // normal screen size
-    var activeWidthButton =
-        ref.read(widthSizeWithActiveArButtonInSmallScreen); //small screen size
+    var inActiveWidthButton = ref.read(
+      widthSizeWithInActiveArButton,
+    ); // normal screen size
+    var activeWidthButton = ref.read(
+      widthSizeWithActiveArButtonInSmallScreen,
+    ); //small screen size
 
     /// Active height button
-    var inActiveHeightButton =
-        ref.read(heightSizeInActiveArButton); // normal screen size
-    var activeHeightButton =
-        ref.read(heightSizeActiveArButtonInSmallScreen); //small screen size
+    var inActiveHeightButton = ref.read(
+      heightSizeInActiveArButton,
+    ); // normal screen size
+    var activeHeightButton = ref.read(
+      heightSizeActiveArButtonInSmallScreen,
+    ); //small screen size
 
     return SizedBox(
-      width: getIt<AppDimension>().isSmallScreen(context)
-          ? activeWidthButton
-          : inActiveWidthButton,
-      height: getIt<AppDimension>().isSmallScreen(context)
-          ? activeHeightButton
-          : inActiveHeightButton,
+      width:
+          getIt<AppDimension>().isSmallScreen(context)
+              ? activeWidthButton
+              : inActiveWidthButton,
+      height:
+          getIt<AppDimension>().isSmallScreen(context)
+              ? activeHeightButton
+              : inActiveHeightButton,
       child: ElevatedButton(
+        /*
+        onPressed: () async {
+  WidgetsBinding.instance.addPostFrameCallback((_) async {
+    ref.read(languageNotifier.notifier).changeLanguage("ar", context);
+    ref.read(languageNotifier.notifier).saveLanguage("ar");
+
+    switch (true) {
+      case bool when ref.read(isLevelOneNotifier):
+        runLevelOneMethod();
+        break;
+      case bool when ref.read(isLevelTowNotifier):
+        runLevelTwoMethod();
+        break;
+      case bool when ref.read(isLevelThreeNotifier):
+        runLevelThreeMethod();
+        break;
+      case bool when ref.read(isLevelFourNotifier):
+        runLevelFourMethod();
+        break;
+      default:
+        // Handle case where no level is active (optional)
+        break;
+    }
+  });
+
+  if (NewSession.get("language", "ar") == "ar") {
+    return;
+  }
+
+  NewSession.save("language", "ar");
+},
+         */
         onPressed: () async {
           WidgetsBinding.instance.addPostFrameCallback((_) async {
             ref.read(languageNotifier.notifier).changeLanguage("ar", context);
             ref.read(languageNotifier.notifier).saveLanguage("ar");
+            //that should use a switch , to check current level, that when
+            // change the language, that should keep in current level even
+            // else the language is changed
           });
           if (NewSession.get("language", "ar") == "ar") {
             return;
@@ -111,19 +150,25 @@ class ArabicButton extends ConsumerWidget {
         },
         style: ElevatedButton.styleFrom(
           elevation: NewSession.get("language", "ar") == 'ar' ? 0 : 3.5,
-          backgroundColor: NewSession.get(
-                      "language",
-                      "ar"
-                          "") ==
-                  'ar'
-              ? (ref.read(themeModeNotifier.notifier).primaryTheme(ref: ref))
-              : Colors.grey, // Highlight selected language
+          backgroundColor:
+              NewSession.get(
+                        "language",
+                        "ar"
+                            "",
+                      ) ==
+                      'ar'
+                  ? (ref
+                      .read(themeModeNotifier.notifier)
+                      .primaryTheme(ref: ref))
+                  : Colors.grey, // Highlight selected language
         ),
-        child: Text('ع',
-            style: TextStyle(
-                fontSize:
-                    getIt<AppDimension>().isSmallScreen(context) ? 14 : 16,
-                color: Colors.white)),
+        child: Text(
+          'ع',
+          style: TextStyle(
+            fontSize: getIt<AppDimension>().isSmallScreen(context) ? 14 : 16,
+            color: Colors.white,
+          ),
+        ),
       ),
     );
   }
@@ -135,29 +180,38 @@ class EnglishButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ///  inActive width button
-    var inActiveWidthButton =
-        ref.read(widthSizeWithInActiveEnButton); // normal screen size
-    var activeWidthButton =
-        ref.read(widthSizeWithActiveEnButtonInSmallScreen); //small screen size
+    var inActiveWidthButton = ref.read(
+      widthSizeWithInActiveEnButton,
+    ); // normal screen size
+    var activeWidthButton = ref.read(
+      widthSizeWithActiveEnButtonInSmallScreen,
+    ); //small screen size
 
     /// Active height button
-    var inActiveHeightButton =
-        ref.read(heightSizeInActiveEnButton); // normal screen size
-    var activeHeightButton =
-        ref.read(heightSizeActiveEnButtonInSmallScreen); //small screen size
+    var inActiveHeightButton = ref.read(
+      heightSizeInActiveEnButton,
+    ); // normal screen size
+    var activeHeightButton = ref.read(
+      heightSizeActiveEnButtonInSmallScreen,
+    ); //small screen size
 
     return SizedBox(
-      width: getIt<AppDimension>().isSmallScreen(context)
-          ? activeWidthButton
-          : inActiveWidthButton,
-      height: getIt<AppDimension>().isSmallScreen(context)
-          ? activeHeightButton
-          : inActiveHeightButton,
+      width:
+          getIt<AppDimension>().isSmallScreen(context)
+              ? activeWidthButton
+              : inActiveWidthButton,
+      height:
+          getIt<AppDimension>().isSmallScreen(context)
+              ? activeHeightButton
+              : inActiveHeightButton,
       child: ElevatedButton(
         onPressed: () async {
           WidgetsBinding.instance.addPostFrameCallback((_) async {
             ref.read(languageNotifier.notifier).changeLanguage("en", context);
             ref.read(languageNotifier.notifier).saveLanguage("en");
+            //that should use a switch , to check current level, that when
+            // change the language, that should keep in current level even
+            // else the language is changed
           });
 
           if (NewSession.get("language", "en") == "en") {
@@ -169,17 +223,22 @@ class EnglishButton extends ConsumerWidget {
         },
         style: ElevatedButton.styleFrom(
           elevation: NewSession.get("language", "en") == 'en' ? 0 : 3.5,
-          backgroundColor: NewSession.get("language", "en") == 'en'
-              ? (ref.read(themeModeNotifier.notifier).primaryTheme(ref: ref))
-              : Colors.grey, // Highlight selected
+          backgroundColor:
+              NewSession.get("language", "en") == 'en'
+                  ? (ref
+                      .read(themeModeNotifier.notifier)
+                      .primaryTheme(ref: ref))
+                  : Colors.grey, // Highlight selected
           // language
         ),
-        child: Text('EN',
-            softWrap: false,
-            style: TextStyle(
-                fontSize:
-                    getIt<AppDimension>().isSmallScreen(context) ? 14 : 16,
-                color: Colors.white)),
+        child: Text(
+          'EN',
+          softWrap: false,
+          style: TextStyle(
+            fontSize: getIt<AppDimension>().isSmallScreen(context) ? 14 : 16,
+            color: Colors.white,
+          ),
+        ),
       ),
     );
   }

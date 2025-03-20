@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../const/video_duration_filter.dart';
@@ -18,3 +19,6 @@ final videoFilterProvider =
       (ref) => UpdateFilterNotifier(),
     );
 final currentPlayListIdNotifier = StateProvider<String>((ref) => '');
+final horizontalScrollController = Provider<ScrollController>((ref) {
+    return ScrollController();
+});

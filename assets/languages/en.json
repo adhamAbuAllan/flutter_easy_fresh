@@ -246,6 +246,23 @@
   "should_be_at_least_five_advantages": "Should be at least 5 advantages",
   "latest_updates": "Latest Updates",
   "the_address_should_be_true" : "the address should be true",
-  "error_has_been_while_creating_apartment" : "Error has been while creating apartment"
+  "error_has_been_while_creating_apartment" : "Error has been while creating apartment",
+  "level_1" : "level 1",
+  "level_2" : "level 2",
+  "level_3" : "level 3",
+  "level_4" : "level 4",
+  "under_30_m": "under 30 m",
+  "30_60_m": "30 - 60 m",
+  "above_60_m": "above 60 m",
+  "all_videos": "All Videos",
+  "level_of_list": "level",
+  "views": "views",
+  "likes": "likes",
+  "M": " M ",
+  "minute": "minute",
+
+  "K": " K "
+
+
 }
 

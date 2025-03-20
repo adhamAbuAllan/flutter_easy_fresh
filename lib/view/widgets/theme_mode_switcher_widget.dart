@@ -37,15 +37,14 @@ class _ThemeModeSwitcherWidgetState
               color:
               ref.read(themeModeNotifier.notifier).textTheme(ref: ref),
 
-              size: getIt<AppDimension>().isSmallScreen(context) ? 32 - 5 : 32,
+              size:  32,
             ),
             const SizedBox(
               width: 18,
             ),
             Text(SetLocalization.of(context)!.getTranslateValue("appearance"),
                 style: TextStyle(
-                    fontSize:  getIt<AppDimension>().isSmallScreen(context)
-                        ?14 : 16,
+                    fontSize:14 ,
                     color: ref.read(themeModeNotifier.notifier).textTheme(ref: ref),
                 )),
           ],

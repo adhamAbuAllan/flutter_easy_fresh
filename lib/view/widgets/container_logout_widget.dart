@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easy_fresh/contoller/providers/color_provider.dart';
 import 'package:flutter_easy_fresh/view/widgets/aline_widget.dart';
 import 'package:flutter_easy_fresh/view/widgets/language_switcher_widget.dart';
 import 'package:flutter_easy_fresh/view/widgets/theme_mode_switcher_widget.dart';

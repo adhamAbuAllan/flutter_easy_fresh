@@ -1,7 +1,7 @@
 import '../../api/yt_video.dart';
 
 class VideoState {
-  final List<YtVideo> ?playListItems;
+  final List<VideoModel>? playListItems;
   final bool loading;
   final bool ?noVideosFound;
   final bool ?isBoyStudent;
@@ -14,7 +14,7 @@ class VideoState {
   });
 
   VideoState copyWith({
-    List<YtVideo>? playListItems,
+    List<VideoModel>? playListItems,
     bool? loading,
     bool? noVideosFound,
     bool? isBoyStudent,

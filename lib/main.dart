@@ -7,6 +7,7 @@ import 'package:flutter_easy_fresh/contoller/providers/languate_provider.dart';
 import 'package:flutter_easy_fresh/contoller/providers/video_provider.dart';
 import 'package:flutter_easy_fresh/session/new_session.dart';
 import 'package:flutter_easy_fresh/view/splach_screen_ui.dart';
+import 'package:flutter_easy_fresh/view/video_home.dart';
 import 'package:flutter_easy_fresh/view/widgets/container_logout_widget.dart';
 import 'package:flutter_easy_fresh/view/widgets/video_filter_bar_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -40,7 +41,9 @@ void main() async {
       overrides: [
         languageProvider.overrideWith((ref) => LanguageNotifier(initialLocale)),
       ],
-      child: const MyApp(),
+      child:
+          //YouTubeHomePage()
+          const MyApp(),
     ),
   );
 }
@@ -61,6 +64,12 @@ class _MyAppState extends ConsumerState<MyApp> {
       if (NewSession.get("language", "").isEmpty) {
         NewSession.save("language", "ar");
       }
+      if (NewSession.get("listVideoId", "def").isNotEmpty) {
+        ref.read(currentPlayListIdNotifier.notifier).state = NewSession.get(
+          "listVideoId",
+          "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t",
+        );
+      }
       ref.read(themeModeNotifier.notifier).loadThemeMode();
     });
     themeMode.loadValue();
@@ -80,7 +89,10 @@ class _MyAppState extends ConsumerState<MyApp> {
         useMaterial3: false,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const ABCDEFG(),
+      home: const
+      // ABCDEFG(),
+
+      YouTubeHomePage(),
       localizationsDelegates: const [
         SetLocalization.localizationsDelegate,
         GlobalMaterialLocalizations.delegate,
@@ -99,212 +111,212 @@ class _MyAppState extends ConsumerState<MyApp> {
   }
 }
 
-class ABCDEFG extends ConsumerStatefulWidget {
-  const ABCDEFG({super.key});
+// class ABCDEFG extends ConsumerStatefulWidget {
+//   const ABCDEFG({super.key});
+//
+//   @override
+//   ConsumerState createState() => _ABCDEFGState();
+// }
 
-  @override
-  ConsumerState createState() => _ABCDEFGState();
-}
-
-class _ABCDEFGState extends ConsumerState<ABCDEFG> {
-  var listOfVideos = [];
-  double fontSize = 20;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      Future.microtask(() {
-        ref.read(videoNotifierProvider.notifier).getAllVideos();
-      });
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ColorfulSafeArea(
-      child: Scaffold(
-        drawer: Drawer(
-          backgroundColor: Colors.black,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 38.0),
-            child: ContainerMenuWidget(
-              isLogined: false,
-              onChange: (value) {
-                WidgetsBinding.instance.addPostFrameCallback((_) async {
-                  setState(() {
-                    ref
-                        .watch(themeModeNotifier.notifier)
-                        .toggleThemeMode(value);
-                  });
-                });
-              },
-            ),
-          ),
-        ),
-        drawerScrimColor: Colors.black.withAlpha(50),
-
-        backgroundColor: Colors.black,
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 300),
-            Center(
-              child:
-                  ref.watch(videoNotifierProvider).loading
-                      ? CircularProgressIndicator(color: Colors.white)
-                      : ListView.builder(
-                        shrinkWrap: true,
-                        itemCount:
-                            ref
-                                .watch(videoNotifierProvider)
-                                .playListItems
-                                ?.length ??
-                            0,
-                        itemBuilder: (context, index) {
-                          final video =
-                              ref
-                                  .watch(videoNotifierProvider)
-                                  .playListItems?[index];
-
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Center(
-                              child: Text(
-                                video?.videoTitle ?? "No Title",
-                                style: TextStyle(color: Colors.white),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-            ),
-            SizedBox(
-              height: 50,
-              child: Row(
-                spacing: 16,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      WidgetsBinding.instance.addPostFrameCallback((_) async {
-                        Future.microtask(() {
-                          if (NewSession.get("language", "") == "ar") {
-                            debugPrint("arabic");
-                          } else {
-                            debugPrint("english");
-                          }
-                          ref
-                              .read(videoNotifierProvider.notifier)
-                              .getAllVideos(
-                                listPlayId:
-                                    "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t",
-                              );
-                        });
-                      });
-                    },
-                    child: Text("list 1"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      WidgetsBinding.instance.addPostFrameCallback((_) async {
-                        Future.microtask(() {
-                          ref
-                              .read(videoNotifierProvider.notifier)
-                              .getAllVideos(
-                                listPlayId:
-                                    "PLiMj4nUvC2Jgrw2d4XuhEDE_X69eHRJvX",
-                              );
-                        });
-                      });
-                    },
-                    child: Text("list 2"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      WidgetsBinding.instance.addPostFrameCallback((_) async {
-                        Future.microtask(() {
-                          ref
-                              .read(videoNotifierProvider.notifier)
-                              .getAllVideos(
-                                listPlayId:
-                                    "PLiMj4nUvC2JhWsxIN77Fi-chkVERDFUtt",
-                              );
-                        });
-                      });
-                    },
-                    child: Text("list 3"),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 50,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: VideoFilterBarWidgetA(),
-              ),
-            ),
-            // SizedBox(
-            //   height: 50,
-            //   child: Row(
-            //     spacing: 16,
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     crossAxisAlignment: CrossAxisAlignment.center,
-            //     children: [
-            //       ElevatedButton(onPressed: () {
-            //         WidgetsBinding.instance.addPostFrameCallback((_) async {
-            //           VideoState videoState = VideoState();
-            //
-            //           Future.microtask(() {
-            //             ref
-            //                 .read(videoNotifierProvider.notifier)
-            //                 .getAllVideos(
-            //               listPlayId: "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t"
-            //             );
-            //           });
-            //         });
-            //       }, child: Text("under 30 m")),
-            //       ElevatedButton(onPressed: () {
-            //         WidgetsBinding.instance.addPostFrameCallback((_) async {
-            //           VideoState videoState = VideoState();
-            //
-            //           Future.microtask(() {
-            //             ref
-            //                 .read(videoNotifierProvider.notifier)
-            //                 .getAllVideos(
-            //               listPlayId: "PLiMj4nUvC2Jgrw2d4XuhEDE_X69eHRJvX"
-            //             );
-            //
-            //           });
-            //         });
-            //       }, child: Text("30 - 60 m")),
-            //       ElevatedButton(onPressed: () {
-            //         WidgetsBinding.instance.addPostFrameCallback((_) async {
-            //           VideoState videoState = VideoState();
-            //
-            //           Future.microtask(() {
-            //             ref
-            //                 .read(videoNotifierProvider.notifier)
-            //                 .getAllVideos(
-            //               listPlayId: "PLiMj4nUvC2JhWsxIN77Fi-chkVERDFUtt"
-            //             );
-            //           });
-            //         });
-            //       }, child: Text("above 60 m")),
-            //     ],
-            //
-            //   ),
-            // ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+// class _ABCDEFGState extends ConsumerState<ABCDEFG> {
+//   var listOfVideos = [];
+//   double fontSize = 20;
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     WidgetsBinding.instance.addPostFrameCallback((_) async {
+//       Future.microtask(() {
+//         ref.read(videoNotifierProvider.notifier).getAllVideos();
+//       });
+//     });
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return ColorfulSafeArea(
+//       child: Scaffold(
+//         drawer: Drawer(
+//           backgroundColor: Colors.black,
+//           child: Padding(
+//             padding: const EdgeInsets.only(top: 38.0),
+//             child: ContainerMenuWidget(
+//               isLogined: false,
+//               onChange: (value) {
+//                 WidgetsBinding.instance.addPostFrameCallback((_) async {
+//                   setState(() {
+//                     ref
+//                         .watch(themeModeNotifier.notifier)
+//                         .toggleThemeMode(value);
+//                   });
+//                 });
+//               },
+//             ),
+//           ),
+//         ),
+//         drawerScrimColor: Colors.black.withAlpha(50),
+//
+//         backgroundColor: Colors.black,
+//         body: Column(
+//           mainAxisAlignment: MainAxisAlignment.spaceAround,
+//           crossAxisAlignment: CrossAxisAlignment.center,
+//           children: [
+//             SizedBox(height: 300),
+//             Center(
+//               child:
+//                   ref.watch(videoNotifierProvider).loading
+//                       ? CircularProgressIndicator(color: Colors.white)
+//                       : ListView.builder(
+//                         shrinkWrap: true,
+//                         itemCount:
+//                             ref
+//                                 .watch(videoNotifierProvider)
+//                                 .playListItems
+//                                 ?.length ??
+//                             0,
+//                         itemBuilder: (context, index) {
+//                           final video =
+//                               ref
+//                                   .watch(videoNotifierProvider)
+//                                   .playListItems?[index];
+//
+//                           return Padding(
+//                             padding: const EdgeInsets.symmetric(vertical: 8.0),
+//                             child: Center(
+//                               child: Text(
+//                                 video?.videoTitle ?? "No Title",
+//                                 style: TextStyle(color: Colors.white),
+//                                 textAlign: TextAlign.center,
+//                               ),
+//                             ),
+//                           );
+//                         },
+//                       ),
+//             ),
+//             SizedBox(
+//               height: 50,
+//               child: Row(
+//                 spacing: 16,
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 crossAxisAlignment: CrossAxisAlignment.center,
+//                 children: [
+//                   ElevatedButton(
+//                     onPressed: () {
+//                       WidgetsBinding.instance.addPostFrameCallback((_) async {
+//                         Future.microtask(() {
+//                           if (NewSession.get("language", "") == "ar") {
+//                             debugPrint("arabic");
+//                           } else {
+//                             debugPrint("english");
+//                           }
+//                           ref
+//                               .read(videoNotifierProvider.notifier)
+//                               .getAllVideos(
+//                                 listPlayId:
+//                                     "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t", context: context,
+//                               );
+//                         });
+//                       });
+//                     },
+//                     child: Text("list 1"),
+//                   ),
+//                   ElevatedButton(
+//                     onPressed: () {
+//                       WidgetsBinding.instance.addPostFrameCallback((_) async {
+//                         Future.microtask(() {
+//                           ref
+//                               .read(videoNotifierProvider.notifier)
+//                               .getAllVideos(
+//                                 listPlayId:
+//                                     "PLiMj4nUvC2Jgrw2d4XuhEDE_X69eHRJvX", context: context,
+//                               );
+//                         });
+//                       });
+//                     },
+//                     child: Text("list 2"),
+//                   ),
+//                   ElevatedButton(
+//                     onPressed: () {
+//                       WidgetsBinding.instance.addPostFrameCallback((_) async {
+//                         Future.microtask(() {
+//                           ref
+//                               .read(videoNotifierProvider.notifier)
+//                               .getAllVideos(
+//                                 listPlayId:
+//                                     "PLiMj4nUvC2JhWsxIN77Fi-chkVERDFUtt", context: context,
+//                               );
+//                         });
+//                       });
+//                     },
+//                     child: Text("list 3"),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//             SizedBox(
+//               height: 50,
+//               child: SingleChildScrollView(
+//                 scrollDirection: Axis.horizontal,
+//                 child: VideoFilterBarWidgetA(),
+//               ),
+//             ),
+//             // SizedBox(
+//             //   height: 50,
+//             //   child: Row(
+//             //     spacing: 16,
+//             //     mainAxisAlignment: MainAxisAlignment.center,
+//             //     crossAxisAlignment: CrossAxisAlignment.center,
+//             //     children: [
+//             //       ElevatedButton(onPressed: () {
+//             //         WidgetsBinding.instance.addPostFrameCallback((_) async {
+//             //           VideoState videoState = VideoState();
+//             //
+//             //           Future.microtask(() {
+//             //             ref
+//             //                 .read(videoNotifierProvider.notifier)
+//             //                 .getAllVideos(
+//             //               listPlayId: "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t"
+//             //             );
+//             //           });
+//             //         });
+//             //       }, child: Text("under 30 m")),
+//             //       ElevatedButton(onPressed: () {
+//             //         WidgetsBinding.instance.addPostFrameCallback((_) async {
+//             //           VideoState videoState = VideoState();
+//             //
+//             //           Future.microtask(() {
+//             //             ref
+//             //                 .read(videoNotifierProvider.notifier)
+//             //                 .getAllVideos(
+//             //               listPlayId: "PLiMj4nUvC2Jgrw2d4XuhEDE_X69eHRJvX"
+//             //             );
+//             //
+//             //           });
+//             //         });
+//             //       }, child: Text("30 - 60 m")),
+//             //       ElevatedButton(onPressed: () {
+//             //         WidgetsBinding.instance.addPostFrameCallback((_) async {
+//             //           VideoState videoState = VideoState();
+//             //
+//             //           Future.microtask(() {
+//             //             ref
+//             //                 .read(videoNotifierProvider.notifier)
+//             //                 .getAllVideos(
+//             //               listPlayId: "PLiMj4nUvC2JhWsxIN77Fi-chkVERDFUtt"
+//             //             );
+//             //           });
+//             //         });
+//             //       }, child: Text("above 60 m")),
+//             //     ],
+//             //
+//             //   ),
+//             // ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});

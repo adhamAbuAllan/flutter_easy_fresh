@@ -254,5 +254,19 @@
   "should_be_at_least_five_advantages": "برجاء إضافة ما لا يقل عن 5 مزايا",
   "latest_updates": "آخر التحديثات",
   "the_address_should_be_true": "يجب أن يكون العنوان صحيحًا",
-  "error_has_been_while_creating_apartment": "حدث خطأ أثناء إنشاء الشقة"
+  "error_has_been_while_creating_apartment": "حدث خطأ أثناء إنشاء الشقة",
+  "level_1": "المستوى 1",
+  "level_2": "المستوى 2",
+  "level_3": "المستوى 3",
+  "level_4": "المستوى 4",
+  "under_30_m": "أقل من 30 د",
+  "30_60_m": "من 30 إلى 60 د",
+  "above_60_m": "أكثر من 60 د",
+  "all_videos": "جميع الفيديوهات",
+  "level_of_list": "المستوى",
+  "views":"مشاهدة",
+  "likes": "إعجاب",
+  "M": " مليون ",
+  "K": " ألف ",
+  "minute": "دقيقة"
 }
