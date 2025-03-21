@@ -1,4 +1,3 @@
-import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easy_fresh/contoller/methods/change_theme_mode.dart';
@@ -8,9 +7,7 @@ import 'package:flutter_easy_fresh/contoller/providers/video_provider.dart';
 import 'package:flutter_easy_fresh/session/new_session.dart';
 import 'package:flutter_easy_fresh/view/splach_screen_ui.dart';
 import 'package:flutter_easy_fresh/view/video_home.dart';
-import 'package:flutter_easy_fresh/view/widgets/container_logout_widget.dart';
-import 'package:flutter_easy_fresh/view/widgets/video_filter_bar_widget.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';

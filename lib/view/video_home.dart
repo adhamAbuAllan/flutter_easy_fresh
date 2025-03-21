@@ -1,7 +1,6 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_easy_fresh/contoller/providers/video_provider.dart';
 import 'package:flutter_easy_fresh/view/widgets/container_logout_widget.dart';
 import 'package:flutter_easy_fresh/view/widgets/video_card_skeleton.dart';
 import 'package:flutter_easy_fresh/view/widgets/videos_list_widget.dart';
@@ -10,7 +9,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../contoller/providers/color_provider.dart';
 import '../contoller/providers/widgets_porvider.dart';
 import '../contoller/status/video_status.dart';
-import '../session/new_session.dart';
 
 class YouTubeHomePage extends ConsumerStatefulWidget {
   const YouTubeHomePage({super.key});
@@ -48,13 +46,12 @@ class _YouTubeHomePageState extends ConsumerState<YouTubeHomePage> {
     });
 
     // Fetch videos when the widget is initialized
-
   }
 
   @override
   Widget build(BuildContext context) {
     return ColorfulSafeArea(
-      color: Colors.black.withAlpha(100),
+      color: ref.read(themeModeNotifier.notifier).containerTheme(ref: ref),
       child: Scaffold(
         drawer: Drawer(
           backgroundColor: ref
@@ -67,9 +64,7 @@ class _YouTubeHomePageState extends ConsumerState<YouTubeHomePage> {
               onChange: (value) {
                 WidgetsBinding.instance.addPostFrameCallback((_) async {
                   setState(() {
-                    ref
-                        .watch(themeModeNotifier.notifier)
-                        .toggleThemeMode(value);
+                    ref.watch(themeModeNotifier.notifier).toggleThemeMode(value);
                   });
                 });
               },
@@ -77,14 +72,12 @@ class _YouTubeHomePageState extends ConsumerState<YouTubeHomePage> {
           ),
         ),
         drawerScrimColor: Colors.black.withAlpha(100),
-
+      
         backgroundColor: ref
             .read(themeModeNotifier.notifier)
             .backgroundAppTheme(ref: ref),
         // const Color(0xff2B2B2B),
-        body:
-
-                ListVideosWithTypeBtn(scrollController: scrollController),
+        body: ListVideosWithTypeBtn(scrollController: scrollController),
       ),
     );
   }

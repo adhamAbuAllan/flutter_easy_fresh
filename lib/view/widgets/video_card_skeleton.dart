@@ -6,6 +6,7 @@ import 'package:skeletons/skeletons.dart';
 
 
 import '../../contoller/providers/color_provider.dart';
+import '../../contoller/providers/video_provider.dart';
 
 
 class SkeletonHomeUi extends ConsumerStatefulWidget {
@@ -20,9 +21,13 @@ class SkeletonHomeUi extends ConsumerStatefulWidget {
 class _HomeSkeletonWidgetState extends ConsumerState<SkeletonHomeUi> {
   @override
   Widget build(BuildContext context) {
+    final videoState = ref.watch(videoNotifierProvider);
+
     return SliverList(
+
       delegate:SliverChildBuilderDelegate(
-        childCount: 10,
+
+        childCount: videoState.loading ? 2:10,
         (context, index) {
           return SkeletonVideoCardA();
         },

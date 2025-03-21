@@ -46,44 +46,49 @@ class _YouTubeVideoCardState extends ConsumerState<YouTubeVideoCard> {
 
     return CustomScrollView(
       controller: widget.scrollController,
-      physics: const ClampingScrollPhysics(),
-
+      physics: const BouncingScrollPhysics(),
       slivers: [
-        SliverToBoxAdapter(
-          child: SizedBox(
-            height: 50,
-            child: SingleChildScrollView(
+        // Add SliverAppBar for app bar behavior
+        SliverAppBar(
+          backgroundColor: ref.read(themeModeNotifier.notifier).backgroundAppTheme(ref: ref),
+          leading: SizedBox(),
+          expandedHeight: 50, // Adjust the height as needed
+          floating: true, // Makes the app bar visible as soon as the user scrolls
+          pinned: false, // Keeps the app bar visible when scrolled up
+          flexibleSpace: FlexibleSpaceBar(
+
+            background: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               controller: ref.watch(horizontalScrollController),
-              child: VideoFilterBarWidgetA(),
+              child: VideoFilterBarWidgetA(), // Your filter widget
             ),
           ),
         ),
 
+        // Check if video state is loading, if yes show skeleton, else show list of videos
         videoState.loading
             ? SkeletonHomeUi(hasCitiesBar: false)
             : SliverList(
-              delegate: SliverChildBuilderDelegate(
-                childCount: videoState.playListItems?.length,
+          delegate: SliverChildBuilderDelegate(
+            childCount: videoState.playListItems?.length,
                 (context, index) {
-                  final ytVideo = videoState.playListItems?[index];
-                  return RepaintBoundary(
-                    child: VideoCard(
-                      videoModel:
-                          ytVideo ??
-                          VideoModel(
-                            videoId: "",
-                            videoTitle: "",
-                            thumbnailUrl: "",
-                            viewsCount: "",
-                            likesCount: '',
-                            videoDescription: '',
-                          ),
-                    ),
-                  );
-                },
-              ),
-            ),
+              final ytVideo = videoState.playListItems?[index];
+              return RepaintBoundary(
+                child: VideoCard(
+                  videoModel: ytVideo ??
+                      VideoModel(
+                        videoId: "",
+                        videoTitle: "",
+                        thumbnailUrl: "",
+                        viewsCount: "",
+                        likesCount: '',
+                        videoDescription: '',
+                      ),
+                ),
+              );
+            },
+          ),
+        ),
       ],
     );
   }
