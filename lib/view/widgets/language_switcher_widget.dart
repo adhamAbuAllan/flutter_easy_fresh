@@ -70,12 +70,6 @@ class ArabicButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String viewsLabel = SetLocalization.of(context)?.getTranslateValue("views") ?? "views";
-    String likesLabel = SetLocalization.of(context)?.getTranslateValue("likes") ?? "likes";
-    String MLabel = SetLocalization.of(context)?.getTranslateValue("M") ?? "M";
-    String KLabel = SetLocalization.of(context)?.getTranslateValue("K") ?? "K";
-    String minuteLabel = SetLocalization.of(context)?.getTranslateValue("minute") ?? "min";
-
     ///  inActive width button
     var inActiveWidthButton = ref.read(
       widthSizeWithInActiveArButton,
@@ -146,54 +140,47 @@ class ArabicButton extends ConsumerWidget {
 
             switch (currentId) {
               case 'PLFky0QidIsRXWOwxtSerlqeRtaHM7XMt_': // Replace with actual ID
-                ref
-                    .watch(videoNotifierProvider.notifier)
-                    .getAllVideos(     viewsLabel: viewsLabel,
-                  likesLabel: likesLabel,
-                  MLabel: MLabel,
-                  KLabel: KLabel,
-                  minuteLabel: minuteLabel,
-                  listPlayId: "PLFky0QidIsRVe6LCB_AmakRBALyqDOdN9",
-                );
+                WidgetsBinding.instance.addPostFrameCallback((_) async {
+                  ref
+                      .watch(videoNotifierProvider.notifier)
+                      .getAllVideos(
+                        context: context,
+                        listPlayId: "PLFky0QidIsRVe6LCB_AmakRBALyqDOdN9",
+                      );
+                });
                 break;
               case 'PLFky0QidIsRX9imrxA4cmg_FcY9h9TTWH': // Replace with actual ID
+                WidgetsBinding.instance.addPostFrameCallback((_) async {
+                  ref
+                      .watch(videoNotifierProvider.notifier)
+                      .getAllVideos(
+                        context: context,
 
-                ref
-                    .watch(videoNotifierProvider.notifier)
-                    .getAllVideos(     viewsLabel: viewsLabel,
-                  likesLabel: likesLabel,
-                  MLabel: MLabel,
-                  KLabel: KLabel,
-                  minuteLabel: minuteLabel,
-                  listPlayId: "PLFky0QidIsRU6hwTIVSUSIGHw-3iPBlHy",
-                );
-
+                        listPlayId: "PLFky0QidIsRU6hwTIVSUSIGHw-3iPBlHy",
+                      );
+                });
                 break;
               case 'PLFky0QidIsRXF6rZbVp4xe9ueBEec3Lnv': // Replace with actual ID
+                WidgetsBinding.instance.addPostFrameCallback((_) async {
+                  ref
+                      .watch(videoNotifierProvider.notifier)
+                      .getAllVideos(
+                        context: context,
 
-                ref
-                    .watch(videoNotifierProvider.notifier)
-                    .getAllVideos(     viewsLabel: viewsLabel,
-                  likesLabel: likesLabel,
-                  MLabel: MLabel,
-                  KLabel: KLabel,
-                  minuteLabel: minuteLabel,
-                  listPlayId: "PLFky0QidIsRVNWtfMFszywLppLgTfa4I2",
-                );
-
+                        listPlayId: "PLFky0QidIsRVNWtfMFszywLppLgTfa4I2",
+                      );
+                });
                 break;
               case 'PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t': // Replace with actual ID
+                WidgetsBinding.instance.addPostFrameCallback((_) async {
+                  ref
+                      .watch(videoNotifierProvider.notifier)
+                      .getAllVideos(
+                        context: context,
 
-                ref
-                    .watch(videoNotifierProvider.notifier)
-                    .getAllVideos(     viewsLabel: viewsLabel,
-                  likesLabel: likesLabel,
-                  MLabel: MLabel,
-                  KLabel: KLabel,
-                  minuteLabel: minuteLabel,
-                  listPlayId: "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t",
-                );
-
+                        listPlayId: "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t",
+                      );
+                });
                 break;
               default:
                 // Handle case where no level is active
@@ -250,13 +237,6 @@ class EnglishButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String viewsLabel = SetLocalization.of(context)?.getTranslateValue("views") ?? "views";
-    String likesLabel = SetLocalization.of(context)?.getTranslateValue("likes") ?? "likes";
-    String MLabel = SetLocalization.of(context)?.getTranslateValue("M") ?? "M";
-    String KLabel = SetLocalization.of(context)?.getTranslateValue("K") ?? "K";
-    String minuteLabel = SetLocalization.of(context)?.getTranslateValue("minute") ?? "min";
-
-    ///  inActive width button
     var inActiveWidthButton = ref.read(
       widthSizeWithInActiveEnButton,
     ); // normal screen size
@@ -290,64 +270,56 @@ class EnglishButton extends ConsumerWidget {
             // change the language, that should keep in current level even
             // else the language is changed
 
+            ///  inActive width button
             final currentId = ref.read(currentPlayListIdNotifier);
 
             switch (currentId) {
               case 'PLFky0QidIsRVe6LCB_AmakRBALyqDOdN9': // Replace with actual ID
-                ref
-                    .watch(videoNotifierProvider.notifier)
-                    .getAllVideos(     viewsLabel: viewsLabel,
-                  likesLabel: likesLabel,
-                  MLabel: MLabel,
-                  KLabel: KLabel,
-                  minuteLabel: minuteLabel,
-                  listPlayId:"PLFky0QidIsRXWOwxtSerlqeRtaHM7XMt_"
-                  ,
-                );
+                WidgetsBinding.instance.addPostFrameCallback((_) async {
+                  ref
+                      .watch(videoNotifierProvider.notifier)
+                      .getAllVideos(
+                        context: context,
+
+                        listPlayId: "PLFky0QidIsRXWOwxtSerlqeRtaHM7XMt_",
+                      );
+                });
                 break;
               case 'PLFky0QidIsRU6hwTIVSUSIGHw-3iPBlHy': // Replace with actual ID
+                WidgetsBinding.instance.addPostFrameCallback((_) async {
+                  ref
+                      .watch(videoNotifierProvider.notifier)
+                      .getAllVideos(
+                        context: context,
 
-                ref
-                    .watch(videoNotifierProvider.notifier)
-                    .getAllVideos(     viewsLabel: viewsLabel,
-                  likesLabel: likesLabel,
-                  MLabel: MLabel,
-                  KLabel: KLabel,
-                  minuteLabel: minuteLabel,
-                  listPlayId: "PLFky0QidIsRX9imrxA4cmg_FcY9h9TTWH"
-                  ,
-                );
-
+                        listPlayId: "PLFky0QidIsRX9imrxA4cmg_FcY9h9TTWH",
+                      );
+                });
                 break;
               case 'PLFky0QidIsRVNWtfMFszywLppLgTfa4I2': // Replace with actual ID
+                WidgetsBinding.instance.addPostFrameCallback((_) async {
+                  ref
+                      .watch(videoNotifierProvider.notifier)
+                      .getAllVideos(
+                        context: context,
 
-                ref
-                    .watch(videoNotifierProvider.notifier)
-                    .getAllVideos(     viewsLabel: viewsLabel,
-                  likesLabel: likesLabel,
-                  MLabel: MLabel,
-                  KLabel: KLabel,
-                  minuteLabel: minuteLabel,
-                  listPlayId: "PLFky0QidIsRXF6rZbVp4xe9ueBEec3Lnv"
-                  ,
-                );
-
+                        listPlayId: "PLFky0QidIsRXF6rZbVp4xe9ueBEec3Lnv",
+                      );
+                });
                 break;
               case 'PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t': // Replace with actual ID
+                WidgetsBinding.instance.addPostFrameCallback((_) async {
+                  ref
+                      .watch(videoNotifierProvider.notifier)
+                      .getAllVideos(
+                        context: context,
 
-                ref
-                    .watch(videoNotifierProvider.notifier)
-                    .getAllVideos(     viewsLabel: viewsLabel,
-                  likesLabel: likesLabel,
-                  MLabel: MLabel,
-                  KLabel: KLabel,
-                  minuteLabel: minuteLabel,
-                  listPlayId: "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t",
-                );
-
+                        listPlayId: "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t",
+                      );
+                });
                 break;
               default:
-              // Handle case where no level is active
+                // Handle case where no level is active
                 break;
             }
           });

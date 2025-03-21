@@ -74,7 +74,7 @@ class _YouTubeVideoCardState extends ConsumerState<YouTubeVideoCard> {
 
               Icon(Icons.cancel_presentation,size: 100,color: ref.read(themeModeNotifier
                   .notifier).textTheme(ref: ref),),
-              Text("not found",style: TextStyle(color: ref.read
+              Text("not found duration",style: TextStyle(color: ref.read
               (themeModeNotifier.notifier).textTheme(ref: ref)
 
               ),)],
