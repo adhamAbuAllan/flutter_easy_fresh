@@ -1,8 +1,11 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easy_fresh/const/localization.dart';
 import 'package:flutter_easy_fresh/view/widgets/video_card_skeleton.dart';
+import 'package:flutter_easy_fresh/view/widgets/video_details_bottom_sheet.dart';
 import 'package:flutter_easy_fresh/view/widgets/video_filter_bar_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../api/yt_video.dart';
 import '../../contoller/providers/color_provider.dart';
@@ -42,24 +45,24 @@ class _YouTubeVideoCardState extends ConsumerState<YouTubeVideoCard> {
     final videoState = ref.watch(videoNotifierProvider);
 
     return CustomScrollView(
-          controller: widget.scrollController,
-          physics: const ClampingScrollPhysics(),
+      controller: widget.scrollController,
+      physics: const ClampingScrollPhysics(),
 
-          slivers: [
-            SliverToBoxAdapter(
-              child: SizedBox(
-                height: 50,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  controller: ref.watch(horizontalScrollController),
-                  child: VideoFilterBarWidgetA(),
-                ),
-              ),
+      slivers: [
+        SliverToBoxAdapter(
+          child: SizedBox(
+            height: 50,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              controller: ref.watch(horizontalScrollController),
+              child: VideoFilterBarWidgetA(),
             ),
+          ),
+        ),
 
-            videoState.loading
-                ? SkeletonHomeUi(hasCitiesBar: false)
-                :    SliverList(
+        videoState.loading
+            ? SkeletonHomeUi(hasCitiesBar: false)
+            : SliverList(
               delegate: SliverChildBuilderDelegate(
                 childCount: videoState.playListItems?.length,
                 (context, index) {
@@ -74,14 +77,15 @@ class _YouTubeVideoCardState extends ConsumerState<YouTubeVideoCard> {
                             thumbnailUrl: "",
                             viewsCount: "",
                             likesCount: '',
+                            videoDescription: '',
                           ),
                     ),
                   );
                 },
               ),
             ),
-          ],
-        );
+      ],
+    );
   }
 }
 
@@ -122,7 +126,7 @@ class VideoCard extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(7),
-          color: ref.read(themeModeNotifier.notifier).containerTheme(ref: ref),
+          color: ref.read(themeModeNotifier.notifier).containerTheme(ref: ref).withAlpha(200),
         ),
         child: Column(
           spacing: 10,
@@ -149,7 +153,7 @@ class VideoCard extends ConsumerWidget {
                   fontWeight: FontWeight.bold,
                   color: ref
                       .read(themeModeNotifier.notifier)
-                      .textTheme(ref: ref),
+                      .textTheme(ref: ref).withAlpha(200),
                 ),
               ),
             ),
@@ -162,7 +166,7 @@ class VideoCard extends ConsumerWidget {
                     Icons.thumb_up, // Your icon of choice
                     color: ref
                         .read(themeModeNotifier.notifier)
-                        .textTheme(ref: ref),
+                        .textTheme(ref: ref).withAlpha(200),
                     // const Color(0xfdfCfCfC),
                   ),
                   const SizedBox(width: 3),
@@ -171,7 +175,7 @@ class VideoCard extends ConsumerWidget {
                     style: TextStyle(
                       color: ref
                           .read(themeModeNotifier.notifier)
-                          .textTheme(ref: ref),
+                          .textTheme(ref: ref).withAlpha(200),
                       // const Color(0xfdfCfCfC),
                       fontSize: 16,
                     ),
@@ -179,48 +183,75 @@ class VideoCard extends ConsumerWidget {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Row(
-                children: [
-                  Icon(
-                    size: 14,
-                    Icons.remove_red_eye, // Your icon of choice
-                    color: ref
-                        .read(themeModeNotifier.notifier)
-                        .textTheme(ref: ref),
-                    // const Color(0xfdfCfCfC),
+            GestureDetector(
+              onTap: (){
+                showModalBottomSheet(
+                  context: context,
+
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
                   ),
-                  const SizedBox(width: 3),
-                  Text(
-                    videoModel.viewsCount,
-                    style: TextStyle(
+                  builder: (context) {
+                    return VideoDetailsBottomSheet(videoModel: videoModel);
+                  },
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Row(
+                  children: [
+                    Icon(
+                      size: 14,
+                      Icons.remove_red_eye, // Your icon of choice
                       color: ref
                           .read(themeModeNotifier.notifier)
-                          .textTheme(ref: ref),
-                      // const Color(0xfdfCfCfC)
+                          .textTheme(ref: ref).withAlpha(200),
+                      // const Color(0xfdfCfCfC),
                     ),
-                  ),
-                  const Expanded(child: SizedBox()),
-                  Icon(
-                    size: 14,
-                    Icons.access_time,
-                    color: ref
-                        .read(themeModeNotifier.notifier)
-                        .textTheme(ref: ref),
-                    // const Color(0xfdfCfCfC),
-                  ),
-                  const SizedBox(width: 3),
-                  Text(
-                    videoModel.videoDuration ?? "0:00",
-                    style: TextStyle(
+                    const SizedBox(width: 3),
+                    Row(
+                      children: [
+                        Text(
+                          videoModel.viewsCount,
+                          style: TextStyle(
+                            color: ref
+                                .read(themeModeNotifier.notifier)
+                                .textTheme(ref: ref).withAlpha(200),
+                            // const Color(0xfdfCfCfC)
+                          ),
+                        ),                 Text(
+                          "${SetLocalization.of(context)?.getTranslateValue("more")}",
+                          style: TextStyle(
+                            color: ref
+                                .read(themeModeNotifier.notifier)
+                                .textTheme(ref: ref)
+                            // const Color(0xfdfCfCfC)
+                          ),
+                        ),
+
+                      ],
+                    ),
+                    const Expanded(child: SizedBox()),
+                    Icon(
+                      size: 14,
+                      Icons.access_time,
                       color: ref
                           .read(themeModeNotifier.notifier)
-                          .textTheme(ref: ref),
-                      // const Color(0xfdfCfCfC)
+                          .textTheme(ref: ref).withAlpha(200),
+                      // const Color(0xfdfCfCfC),
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 3),
+                    Text(
+                      videoModel.videoDuration ?? "0:00",
+                      style: TextStyle(
+                        color: ref
+                            .read(themeModeNotifier.notifier)
+                            .textTheme(ref: ref).withAlpha(200),
+                        // const Color(0xfdfCfCfC)
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 10),

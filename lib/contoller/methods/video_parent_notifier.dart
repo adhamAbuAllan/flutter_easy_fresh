@@ -13,7 +13,7 @@ class ParentVideoNotifier {
 
   Future<List<VideoModel>> getAllVideosFromPlaylist({
     String? listPlayId,
- required BuildContext context
+    required BuildContext context,
   }) async {
     if (listPlayId?.isEmpty ?? true) {
       listPlayId = "PLiMj4nUvC2JiDluqq4-qM8sqeCNIb7sL9";
@@ -41,6 +41,8 @@ class ParentVideoNotifier {
           debugPrint("Skipping video with missing videoId");
           continue;
         }
+        String videoDescription =
+            videoData['snippet']['description'] ?? "No description available";
 
         var statsResponse = await http.get(
           Uri.parse(
@@ -74,10 +76,7 @@ class ParentVideoNotifier {
 
           debugPrint("Raw Video Duration for videoId $videoId: $isoDuration");
 
-          String videoDuration = formatDuration(
-            isoDuration,
-            context: context,
-          );
+          String videoDuration = formatDuration(isoDuration, context: context);
           debugPrint(
             "Formatted Video Duration for videoId $videoId: $videoDuration",
           );
@@ -91,16 +90,16 @@ class ParentVideoNotifier {
             videoId: videoId,
             videoTitle: videoData['snippet']['title'],
             thumbnailUrl: thumbnailUrl,
+            videoDescription: videoDescription,
             viewsCount: formatCounts(
               value: viewsCount,
               isViews: true,
               context: context,
-
             ),
             likesCount: formatCounts(
               value: likeCount,
-              isViews: false, context: context,
-
+              isViews: false,
+              context: context,
             ),
             videoDuration: videoDuration,
           );
@@ -325,4 +324,3 @@ class ParentVideoNotifier {
   }
 }
   */
-

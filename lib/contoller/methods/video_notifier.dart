@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_easy_fresh/contoller/methods/video_view_model.dart';
+import 'package:flutter_easy_fresh/contoller/methods/video_parent_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../api/yt_video.dart';
