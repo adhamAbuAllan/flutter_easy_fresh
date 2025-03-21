@@ -1,16 +1,13 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easy_fresh/const/localization.dart';
 import 'package:flutter_easy_fresh/view/widgets/video_card_skeleton.dart';
 import 'package:flutter_easy_fresh/view/widgets/video_details_bottom_sheet.dart';
 import 'package:flutter_easy_fresh/view/widgets/video_filter_bar_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../api/yt_video.dart';
 import '../../contoller/providers/color_provider.dart';
 import '../../contoller/providers/video_provider.dart';
-import '../../session/new_session.dart';
 import '../video_player_ui.dart';
 
 class YouTubeVideoCard extends ConsumerStatefulWidget {
@@ -66,6 +63,23 @@ class _YouTubeVideoCardState extends ConsumerState<YouTubeVideoCard> {
         ),
 
         // Check if video state is loading, if yes show skeleton, else show list of videos
+        if(videoState.playListItems?.isEmpty??true && !videoState.loading)
+        SliverToBoxAdapter(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              //no data icon , result is not found icon
+
+              Icon(Icons.cancel_presentation,size: 100,color: ref.read(themeModeNotifier
+                  .notifier).textTheme(ref: ref),),
+              Text("not found",style: TextStyle(color: ref.read
+              (themeModeNotifier.notifier).textTheme(ref: ref)
+
+              ),)],
+          ),
+        ),
         videoState.loading
             ? SkeletonHomeUi(hasCitiesBar: false)
             : SliverList(

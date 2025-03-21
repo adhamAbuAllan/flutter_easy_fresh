@@ -2,7 +2,6 @@ import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_easy_fresh/view/widgets/container_logout_widget.dart';
-import 'package:flutter_easy_fresh/view/widgets/video_card_skeleton.dart';
 import 'package:flutter_easy_fresh/view/widgets/videos_list_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -82,7 +81,4 @@ class _YouTubeHomePageState extends ConsumerState<YouTubeHomePage> {
     );
   }
 
-  GestureDetector _buildSkeleton() {
-    return GestureDetector(child: SkeletonHomeUi(hasCitiesBar: true));
-  }
 }

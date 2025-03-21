@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easy_fresh/view/widgets/types_of_list_videos_widgets/show_types_button_widget.dart';
 import 'package:flutter_easy_fresh/view/widgets/types_of_list_videos_widgets/types_of_videos_box_widget.dart';
 import 'package:flutter_easy_fresh/view/widgets/video_card.dart';
-import 'package:flutter_easy_fresh/view/widgets/video_filter_bar_widget.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../contoller/providers/video_provider.dart';
 import '../../contoller/providers/widgets_porvider.dart';
 import '../../session/new_session.dart';
 //
