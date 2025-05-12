@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easy_fresh/const/localization.dart';
 import 'package:flutter_easy_fresh/contoller/providers/video_provider.dart';
 import 'package:flutter_easy_fresh/view/widgets/types_of_list_videos_widgets/show_types_button_widget.dart';
 import 'package:flutter_easy_fresh/view/widgets/types_of_list_videos_widgets/types_of_videos_box_widget.dart';
@@ -7,180 +6,9 @@ import 'package:flutter_easy_fresh/view/widgets/video_card.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../contoller/providers/color_provider.dart';
 import '../../contoller/providers/widgets_porvider.dart';
 import '../../session/new_session.dart';
-
-//
-// class VideosListWidget extends ConsumerStatefulWidget {
-//   const VideosListWidget({super.key});
-//
-//   @override
-//   ConsumerState createState() => _VideosListWidgetState();
-// }
-//
-// class _VideosListWidgetState extends ConsumerState<VideosListWidget> {
-//   @override
-//   Widget build(BuildContext context) {
-//
-//     return Column(
-//       mainAxisAlignment: MainAxisAlignment.spaceAround,
-//       crossAxisAlignment: CrossAxisAlignment.center,
-//       children: [
-//         SizedBox(height: 300),
-//         Center(
-//           child:
-//           ref.watch(videoNotifierProvider).loading
-//               ? CircularProgressIndicator(color: Colors.white)
-//               : ListView.builder(
-//             shrinkWrap: true,
-//             itemCount:
-//             ref
-//                 .watch(videoNotifierProvider)
-//                 .playListItems
-//                 ?.length ??
-//                 0,
-//             itemBuilder: (context, index) {
-//               final video =
-//               ref
-//                   .watch(videoNotifierProvider)
-//                   .playListItems?[index];
-//
-//               return Padding(
-//                 padding: const EdgeInsets.symmetric(vertical: 8.0),
-//                 child: Center(
-//                   child: Text(
-//                     video?.videoTitle ?? "No Title",
-//                     style: TextStyle(color: Colors.white),
-//                     textAlign: TextAlign.center,
-//                   ),
-//                 ),
-//               );
-//             },
-//           ),
-//         ),
-//         SizedBox(
-//           height: 50,
-//           child: Row(
-//             spacing: 16,
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             crossAxisAlignment: CrossAxisAlignment.center,
-//             children: [
-//               ElevatedButton(
-//                 onPressed: () {
-//                   WidgetsBinding.instance.addPostFrameCallback((_) async {
-//                     Future.microtask(() {
-//                       if (NewSession.get("language", "") == "ar") {
-//                         debugPrint("arabic");
-//                       } else {
-//                         debugPrint("english");
-//                       }
-//                       ref
-//                           .read(videoNotifierProvider.notifier)
-//                           .getAllVideos(context:context,
-//                         listPlayId:
-//                         "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t",
-//                       );
-//                     });
-//                   });
-//                 },
-//                 child: Text("list 1"),
-//               ),
-//               ElevatedButton(
-//                 onPressed: () {
-//                   WidgetsBinding.instance.addPostFrameCallback((_) async {
-//                     Future.microtask(() {
-//                       ref
-//                           .read(videoNotifierProvider.notifier)
-//                           .getAllVideos(context:context,
-//                         listPlayId:
-//                           "PLiMj4nUvC2Jgrw2d4XuhEDE_X69eHRJvX",
-//                       );
-//                     });
-//                   });
-//                 },
-//                 child: Text("list 2"),
-//               ),
-//               ElevatedButton(
-//                 onPressed: () {
-//                   WidgetsBinding.instance.addPostFrameCallback((_) async {
-//                     Future.microtask(() {
-//                       ref
-//                           .read(videoNotifierProvider.notifier)
-//                           .getAllVideos(context:context,
-//                         listPlayId:
-//                         "PLiMj4nUvC2JhWsxIN77Fi-chkVERDFUtt",
-//                       );
-//                     });
-//                   });
-//                 },
-//                 child: Text("list 3"),
-//               ),
-//             ],
-//           ),
-//         ),
-//         SizedBox(
-//           height: 50,
-//           child: SingleChildScrollView(
-//             scrollDirection: Axis.horizontal,
-//             child: VideoFilterBarWidgetA(),
-//           ),
-//         ),
-//         // SizedBox(
-//         //   height: 50,
-//         //   child: Row(
-//         //     spacing: 16,
-//         //     mainAxisAlignment: MainAxisAlignment.center,
-//         //     crossAxisAlignment: CrossAxisAlignment.center,
-//         //     children: [
-//         //       ElevatedButton(onPressed: () {
-//         //         WidgetsBinding.instance.addPostFrameCallback((_) async {
-//         //           VideoState videoState = VideoState();
-//         //
-//         //           Future.microtask(() {
-//         //             ref
-//         //                 .read(videoNotifierProvider.notifier)
-//         //                 .getAllVideos(context:context,
-//         //               listPlayId: "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t"
-//         //             );
-//         //           });
-//         //         });
-//         //       }, child: Text("under 30 m")),
-//         //       ElevatedButton(onPressed: () {
-//         //         WidgetsBinding.instance.addPostFrameCallback((_) async {
-//         //           VideoState videoState = VideoState();
-//         //
-//         //           Future.microtask(() {
-//         //             ref
-//         //                 .read(videoNotifierProvider.notifier)
-//         //                 .getAllVideos(context:context,
-//         //               listPlayId: "PLiMj4nUvC2Jgrw2d4XuhEDE_X69eHRJvX"
-//         //             );
-//         //
-//         //           });
-//         //         });
-//         //       }, child: Text("30 - 60 m")),
-//         //       ElevatedButton(onPressed: () {
-//         //         WidgetsBinding.instance.addPostFrameCallback((_) async {
-//         //           VideoState videoState = VideoState();
-//         //
-//         //           Future.microtask(() {
-//         //             ref
-//         //                 .read(videoNotifierProvider.notifier)
-//         //                 .getAllVideos(context:context,
-//         //               listPlayId: "PLiMj4nUvC2JhWsxIN77Fi-chkVERDFUtt"
-//         //             );
-//         //           });
-//         //         });
-//         //       }, child: Text("above 60 m")),
-//         //     ],
-//         //
-//         //   ),
-//         // ),
-//       ],
-//     );
-//   }
-// }
+import 'loading_widgets.dart';
 
 class ListVideosWithTypeBtn extends ConsumerWidget {
   const ListVideosWithTypeBtn({super.key, required this.scrollController});
@@ -202,59 +30,19 @@ class ListVideosWithTypeBtn extends ConsumerWidget {
                 ? Alignment.topLeft
                 : Alignment.topRight,
         children: [
-          YouTubeVideoCard(scrollController: scrollController),
+
+          ref.watch(videoNotifierProvider).loading
+          /// [LoadingWidgets] is a widgets that when the list of videos is loading
+              ? LoadingWidgets()
+          /// [YouTubeVideoCard] is a widgets of list of videos.
+
+              : YouTubeVideoCard(scrollController: scrollController),
+
           ShowTypesButtonWidget(text: "level_of_list"),
-          const ShowVideosTypesBoxWidget(), // list of types
-          ref.watch(videoNotifierProvider).loading
-?          Center(child: Text(SetLocalization.of(context)!.getTranslateValue("this_progress_take_an_1_to_3_minutes"),style: TextStyle(color: ref.read
-            (themeModeNotifier
-              .notifier).textTheme(ref: ref)),),):SizedBox(),
-          ref.watch(videoNotifierProvider).loading              ?
-          Padding(
-                padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom + 70,
-                ),
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    height: 50,
-                    width: 150,
-                  decoration:
-                  BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                      color: ref
-                          .read(themeModeNotifier.notifier)
-                          .backgroundAppTheme(ref: ref)
-                  ),
 
-
-                    //here should to use the linear progress that load according
-                    child: LinearProgressIndicator(
-                      semanticsLabel: SetLocalization.of(context)!
-                          .getTranslateValue("loading..."),
-                      borderRadius: BorderRadius.circular(30),
-                      color: ref.read(themeModeNotifier.notifier).primaryTheme(ref: ref),
-                      value: ref.watch(videoNotifierProvider).progressValue,
-                    ),
-                  ),
-                ),
-              )
-              : SizedBox(),
-
-          ref.watch(videoNotifierProvider).loading
-              ? Padding(
-                padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom + 30,
-                ),
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Text(SetLocalization.of(context)!
-                      .getTranslateValue("loading"
-                  "..."),style: TextStyle(color: ref.read(themeModeNotifier
-                  .notifier).textTheme(ref: ref)),),
-                ),
-              )
-              : SizedBox(),
+          /// a button to show
+          /// the list of levels.
+          const ShowVideosTypesBoxWidget(), // list of levels
         ],
       ),
     );

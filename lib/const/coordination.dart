@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 
 class AppDimension {
   // the icons will be more adaptive by check a width of screen

@@ -21,14 +21,15 @@ import 'const/strings.dart';
 import 'contoller/providers/color_provider.dart';
 import 'contoller/providers/language_proivder.dart';
 
+/// this app is only for learn and improve the experience!!! , some codes
+/// from AI...
 final Future<SharedPreferences> sp = SharedPreferences.getInstance();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NewSession.init();
   await Hive.initFlutter();
-  Hive.registerAdapter(VideoModelAdapter()); // Register the adapter
-
+  Hive.registerAdapter(VideoModelAdapter());
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -42,9 +43,7 @@ void main() async {
       overrides: [
         languageProvider.overrideWith((ref) => LanguageNotifier(initialLocale)),
       ],
-      child:
-          //YouTubeHomePage()
-          const MyApp(),
+      child: const MyApp(),
     ),
   );
 }
@@ -90,11 +89,7 @@ class _MyAppState extends ConsumerState<MyApp> {
         useMaterial3: false,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home:
-      // MyHomePage(title: ""),
-      const
-      // ABCDEFG(),
-      YouTubeHomePage(),
+      home: const YouTubeHomePage(),
       localizationsDelegates: const [
         SetLocalization.localizationsDelegate,
         GlobalMaterialLocalizations.delegate,
@@ -106,262 +101,8 @@ class _MyAppState extends ConsumerState<MyApp> {
       // initialRoute: MyPagesRoutes.splashScreen,
       routes: {
         MyPagesRoutes.main: (context) => const MyApp(),
-
         MyPagesRoutes.splashScreen: (context) => const SplashScreenUi(),
       },
-    );
-  }
-}
-
-// class ABCDEFG extends ConsumerStatefulWidget {
-//   const ABCDEFG({super.key});
-//
-//   @override
-//   ConsumerState createState() => _ABCDEFGState();
-// }
-
-// class _ABCDEFGState extends ConsumerState<ABCDEFG> {
-//   var listOfVideos = [];
-//   double fontSize = 20;
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     WidgetsBinding.instance.addPostFrameCallback((_) async {
-//       Future.microtask(() {
-//         ref.read(videoNotifierProvider.notifier).getAllVideos(context:context,);
-//       });
-//     });
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return ColorfulSafeArea(
-//       child: Scaffold(
-//         drawer: Drawer(
-//           backgroundColor: Colors.black,
-//           child: Padding(
-//             padding: const EdgeInsets.only(top: 38.0),
-//             child: ContainerMenuWidget(
-//               isLogined: false,
-//               onChange: (value) {
-//                 WidgetsBinding.instance.addPostFrameCallback((_) async {
-//                   setState(() {
-//                     ref
-//                         .watch(themeModeNotifier.notifier)
-//                         .toggleThemeMode(value);
-//                   });
-//                 });
-//               },
-//             ),
-//           ),
-//         ),
-//         drawerScrimColor: Colors.black.withAlpha(50),
-//
-//         backgroundColor: Colors.black,
-//         body: Column(
-//           mainAxisAlignment: MainAxisAlignment.spaceAround,
-//           crossAxisAlignment: CrossAxisAlignment.center,
-//           children: [
-//             SizedBox(height: 300),
-//             Center(
-//               child:
-//                   ref.watch(videoNotifierProvider).loading
-//                       ? CircularProgressIndicator(color: Colors.white)
-//                       : ListView.builder(
-//                         shrinkWrap: true,
-//                         itemCount:
-//                             ref
-//                                 .watch(videoNotifierProvider)
-//                                 .playListItems
-//                                 ?.length ??
-//                             0,
-//                         itemBuilder: (context, index) {
-//                           final video =
-//                               ref
-//                                   .watch(videoNotifierProvider)
-//                                   .playListItems?[index];
-//
-//                           return Padding(
-//                             padding: const EdgeInsets.symmetric(vertical: 8.0),
-//                             child: Center(
-//                               child: Text(
-//                                 video?.videoTitle ?? "No Title",
-//                                 style: TextStyle(color: Colors.white),
-//                                 textAlign: TextAlign.center,
-//                               ),
-//                             ),
-//                           );
-//                         },
-//                       ),
-//             ),
-//             SizedBox(
-//               height: 50,
-//               child: Row(
-//                 spacing: 16,
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 crossAxisAlignment: CrossAxisAlignment.center,
-//                 children: [
-//                   ElevatedButton(
-//                     onPressed: () {
-//                       WidgetsBinding.instance.addPostFrameCallback((_) async {
-//                         Future.microtask(() {
-//                           if (NewSession.get("language", "") == "ar") {
-//                             debugPrint("arabic");
-//                           } else {
-//                             debugPrint("english");
-//                           }
-//                           ref
-//                               .read(videoNotifierProvider.notifier)
-//                               .getAllVideos(context:context,
-//                                 listPlayId:
-//                                     "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t", context: context,
-//                               );
-//                         });
-//                       });
-//                     },
-//                     child: Text("list 1"),
-//                   ),
-//                   ElevatedButton(
-//                     onPressed: () {
-//                       WidgetsBinding.instance.addPostFrameCallback((_) async {
-//                         Future.microtask(() {
-//                           ref
-//                               .read(videoNotifierProvider.notifier)
-//                               .getAllVideos(context:context,
-//                                 listPlayId:
-//                                     "PLiMj4nUvC2Jgrw2d4XuhEDE_X69eHRJvX", context: context,
-//                               );
-//                         });
-//                       });
-//                     },
-//                     child: Text("list 2"),
-//                   ),
-//                   ElevatedButton(
-//                     onPressed: () {
-//                       WidgetsBinding.instance.addPostFrameCallback((_) async {
-//                         Future.microtask(() {
-//                           ref
-//                               .read(videoNotifierProvider.notifier)
-//                               .getAllVideos(context:context,
-//                                 listPlayId:
-//                                     "PLiMj4nUvC2JhWsxIN77Fi-chkVERDFUtt", context: context,
-//                               );
-//                         });
-//                       });
-//                     },
-//                     child: Text("list 3"),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//             SizedBox(
-//               height: 50,
-//               child: SingleChildScrollView(
-//                 scrollDirection: Axis.horizontal,
-//                 child: VideoFilterBarWidgetA(),
-//               ),
-//             ),
-//             // SizedBox(
-//             //   height: 50,
-//             //   child: Row(
-//             //     spacing: 16,
-//             //     mainAxisAlignment: MainAxisAlignment.center,
-//             //     crossAxisAlignment: CrossAxisAlignment.center,
-//             //     children: [
-//             //       ElevatedButton(onPressed: () {
-//             //         WidgetsBinding.instance.addPostFrameCallback((_) async {
-//             //           VideoState videoState = VideoState();
-//             //
-//             //           Future.microtask(() {
-//             //             ref
-//             //                 .read(videoNotifierProvider.notifier)
-//             //                 .getAllVideos(context:context,
-//             //               listPlayId: "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t"
-//             //             );
-//             //           });
-//             //         });
-//             //       }, child: Text("under 30 m")),
-//             //       ElevatedButton(onPressed: () {
-//             //         WidgetsBinding.instance.addPostFrameCallback((_) async {
-//             //           VideoState videoState = VideoState();
-//             //
-//             //           Future.microtask(() {
-//             //             ref
-//             //                 .read(videoNotifierProvider.notifier)
-//             //                 .getAllVideos(context:context,
-//             //               listPlayId: "PLiMj4nUvC2Jgrw2d4XuhEDE_X69eHRJvX"
-//             //             );
-//             //
-//             //           });
-//             //         });
-//             //       }, child: Text("30 - 60 m")),
-//             //       ElevatedButton(onPressed: () {
-//             //         WidgetsBinding.instance.addPostFrameCallback((_) async {
-//             //           VideoState videoState = VideoState();
-//             //
-//             //           Future.microtask(() {
-//             //             ref
-//             //                 .read(videoNotifierProvider.notifier)
-//             //                 .getAllVideos(context:context,
-//             //               listPlayId: "PLiMj4nUvC2JhWsxIN77Fi-chkVERDFUtt"
-//             //             );
-//             //           });
-//             //         });
-//             //       }, child: Text("above 60 m")),
-//             //     ],
-//             //
-//             //   ),
-//             // ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
     );
   }
 }

@@ -1,4 +1,3 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers, non_constant_identifier_names, unused_field, unused_local_variable, dead_code, unused_element, camel_case_types
 
 import 'dart:convert';
 

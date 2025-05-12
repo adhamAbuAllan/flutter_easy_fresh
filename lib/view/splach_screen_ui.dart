@@ -6,8 +6,6 @@ import 'package:flutter_easy_fresh/contoller/providers/color_provider.dart';
 import 'package:flutter_easy_fresh/contoller/providers/language_proivder.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../const/strings.dart';
-import '../contoller/providers/video_provider.dart';
 import '../session/new_session.dart';
 
 class SplashScreenUi extends ConsumerStatefulWidget {

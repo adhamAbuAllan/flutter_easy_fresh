@@ -96,45 +96,15 @@ class ArabicButton extends ConsumerWidget {
               ? activeHeightButton
               : inActiveHeightButton,
       child: ElevatedButton(
-        /*
-        onPressed: () async {
-  WidgetsBinding.instance.addPostFrameCallback((_) async {
-    ref.read(languageNotifier.notifier).changeLanguage("ar", context);
-    ref.read(languageNotifier.notifier).saveLanguage("ar");
 
-    switch (true) {
-      case bool when ref.read(isLevelOneNotifier):
-        runLevelOneMethod();
-        break;
-      case bool when ref.read(isLevelTowNotifier):
-        runLevelTwoMethod();
-        break;
-      case bool when ref.read(isLevelThreeNotifier):
-        runLevelThreeMethod();
-        break;
-      case bool when ref.read(isLevelFourNotifier):
-        runLevelFourMethod();
-        break;
-      default:
-        // Handle case where no level is active (optional)
-        break;
-    }
-  });
-
-  if (NewSession.get("language", "ar") == "ar") {
-    return;
-  }
-
-  NewSession.save("language", "ar");
-},
-         */
         onPressed: () async {
           WidgetsBinding.instance.addPostFrameCallback((_) async {
             ref.read(languageNotifier.notifier).changeLanguage("ar", context);
             ref.read(languageNotifier.notifier).saveLanguage("ar");
+
             //that should use a switch , to check current level, that when
             // change the language, that should keep in current level even
-            // else the language is changed
+            // else the language is changed.
 
             final currentId = ref.read(currentPlayListIdNotifier);
 

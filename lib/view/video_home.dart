@@ -24,6 +24,8 @@ class _YouTubeHomePageState extends ConsumerState<YouTubeHomePage> {
   void initState() {
     super.initState();
 
+    /// the scroll controller usages to hide or show both boxes
+    /// [ShowTypesButtonWidget] and [ShowVideosTypesBoxWidget].
     scrollController.addListener(() {
       Future.delayed(const Duration(milliseconds: 350), () {
         if (scrollController.position.userScrollDirection ==
@@ -40,10 +42,7 @@ class _YouTubeHomePageState extends ConsumerState<YouTubeHomePage> {
           ref.watch(isBoxVisibleNotifier.notifier).state = false;
         }
       });
-
     });
-
-    // Fetch videos when the widget is initialized
   }
 
   @override
@@ -62,7 +61,9 @@ class _YouTubeHomePageState extends ConsumerState<YouTubeHomePage> {
               onChange: (value) {
                 WidgetsBinding.instance.addPostFrameCallback((_) async {
                   setState(() {
-                    ref.watch(themeModeNotifier.notifier).toggleThemeMode(value);
+                    ref
+                        .watch(themeModeNotifier.notifier)
+                        .toggleThemeMode(value);
                   });
                 });
               },
@@ -70,7 +71,7 @@ class _YouTubeHomePageState extends ConsumerState<YouTubeHomePage> {
           ),
         ),
         drawerScrimColor: Colors.black.withAlpha(100),
-      
+
         backgroundColor: ref
             .read(themeModeNotifier.notifier)
             .backgroundAppTheme(ref: ref),
@@ -79,5 +80,4 @@ class _YouTubeHomePageState extends ConsumerState<YouTubeHomePage> {
       ),
     );
   }
-
 }
