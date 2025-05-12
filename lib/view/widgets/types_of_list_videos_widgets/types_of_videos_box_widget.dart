@@ -71,9 +71,6 @@ class VideosShowTypesTextButtonWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Get the theme mode from Riverpod state
-    // final themeMode = ref.watch(themeModeProvider);
-
     return Expanded(
       child: TextButton(
         style: ButtonStyle(
@@ -106,12 +103,6 @@ class TypeRowOfLevelOne extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String viewsLabel = SetLocalization.of(context)?.getTranslateValue("views") ?? "views";
-    String likesLabel = SetLocalization.of(context)?.getTranslateValue("likes") ?? "likes";
-    String MLabel = SetLocalization.of(context)?.getTranslateValue("M") ?? "M";
-    String KLabel = SetLocalization.of(context)?.getTranslateValue("K") ?? "K";
-    String minuteLabel = SetLocalization.of(context)?.getTranslateValue("minute") ?? "min";
-
     return Row(
       children: [
         VideosShowTypesTextButtonWidget(
@@ -119,27 +110,32 @@ class TypeRowOfLevelOne extends ConsumerWidget {
           onPressed: () {
             Future.microtask(() {
               if (NewSession.get("language", "") == "ar") {
+                if (NewSession.get("listVideoId", "def") !=
+                    "PLFky0QidIsRVe6LCB_AmakRBALyqDOdN9") {
+                  ref.read(isFirstTimeLoadList.notifier).state = true;
+                }
                 ref
                     .watch(videoNotifierProvider.notifier)
-                    .getAllVideos(context:context,     
-                  
-                  
-                  
-                  
+                    .getAllVideos(
+                      context: context,
+
                       listPlayId: "PLFky0QidIsRVe6LCB_AmakRBALyqDOdN9",
                     );
               } else {
+                if (NewSession.get("listVideoId", "def") !=
+                    "PLFky0QidIsRXWOwxtSerlqeRtaHM7XMt_") {
+                  ref.read(isFirstTimeLoadList.notifier).state = true;
+                }
                 ref
                     .watch(videoNotifierProvider.notifier)
-                    .getAllVideos(context:context,     
-      
-      
-      
-      
+                    .getAllVideos(
+                      context: context,
+
                       listPlayId: "PLFky0QidIsRXWOwxtSerlqeRtaHM7XMt_",
                     );
               }
             });
+            ref.read(isFirstTimeLoadList.notifier).state = false;
           },
         ),
         Padding(
@@ -174,64 +170,41 @@ class TypeRowOfLevelTwo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String viewsLabel = SetLocalization.of(context)?.getTranslateValue("views") ?? "views";
-    String likesLabel = SetLocalization.of(context)?.getTranslateValue("likes") ?? "likes";
-    String MLabel = SetLocalization.of(context)?.getTranslateValue("M") ?? "M";
-    String KLabel = SetLocalization.of(context)?.getTranslateValue("K") ?? "K";
-    String minuteLabel = SetLocalization.of(context)?.getTranslateValue("minute") ?? "min";
-
     return Row(
       children: [
         VideosShowTypesTextButtonWidget(
           textType: "level_2", // Change this as per localization
           onPressed: () {
-            // ref.watch(isLevelOneNotifier.notifier).state = false;
-            // ref.watch(isLevelTwoNotifier.notifier).state = true;
-            // ref.watch(isLevelThreeNotifier.notifier).state = false;
-            // ref.watch(isLevelFourNotifier.notifier).state = false;
 
-            /*
-                      WidgetsBinding.instance.addPostFrameCallback((_) async {
-                        Future.microtask(() {
-                          if (NewSession.get("language", "") == "ar") {
-                            debugPrint("arabic");
-                          } else {
-                            debugPrint("english");
-                          }
-                          ref
-                              .watch(videoNotifierProvider.notifier)
-                              .getAllVideos(context:context,
-                                listPlayId:
-                                    "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t",
-                              );
-                        });
-                      });
- */
-            //PLFky0QidIsRU6hwTIVSUSIGHw-3iPBlHy
+            if (NewSession.get("listVideoId", "def") !=
+                "PLFky0QidIsRU6hwTIVSUSIGHw-3iPBlHy") {
+              ref.read(isFirstTimeLoadList.notifier).state = true;
+            }
             Future.microtask(() {
               if (NewSession.get("language", "") == "ar") {
+
                 ref
                     .watch(videoNotifierProvider.notifier)
-                    .getAllVideos(context:context,     
-      
-      
-      
-      
+                    .getAllVideos(
+                      context: context,
+
                       listPlayId: "PLFky0QidIsRU6hwTIVSUSIGHw-3iPBlHy",
                     );
-
               } else {
+                if (NewSession.get("listVideoId", "def") !=
+                    "PLFky0QidIsRX9imrxA4cmg_FcY9h9TTWH") {
+                  ref.read(isFirstTimeLoadList.notifier).state = true;
+                }
                 ref
                     .watch(videoNotifierProvider.notifier)
-                    .getAllVideos(context:context,     
-      
-      
-      
-      
+                    .getAllVideos(
+                      context: context,
+
                       listPlayId: "PLFky0QidIsRX9imrxA4cmg_FcY9h9TTWH",
                     );
               }
             });
+            ref.read(isFirstTimeLoadList.notifier).state = false;
           },
         ),
         Padding(
@@ -266,56 +239,27 @@ class TypeRowOfLevelThree extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String viewsLabel = SetLocalization.of(context)?.getTranslateValue("views") ?? "views";
-    String likesLabel = SetLocalization.of(context)?.getTranslateValue("likes") ?? "likes";
-    String MLabel = SetLocalization.of(context)?.getTranslateValue("M") ?? "M";
-    String KLabel = SetLocalization.of(context)?.getTranslateValue("K") ?? "K";
-    String minuteLabel = SetLocalization.of(context)?.getTranslateValue("minute") ?? "min";
-
     return Row(
       children: [
         VideosShowTypesTextButtonWidget(
           textType: "level_3", // Change this as per localization
           onPressed: () {
-            // ref.watch(isLevelThreeNotifier.notifier).state = true;
-            // ref.watch(isLevelOneNotifier.notifier).state = false;
-            // ref.watch(isLevelTwoNotifier.notifier).state = false;
-            // ref.watch(isLevelFourNotifier.notifier).state = false;
-            /*
-                      WidgetsBinding.instance.addPostFrameCallback((_) async {
-                        Future.microtask(() {
-                          if (NewSession.get("language", "") == "ar") {
-                            debugPrint("arabic");
-                          } else {
-                            debugPrint("english");
-                          }
-                          ref
-                              .watch(videoNotifierProvider.notifier)
-                              .getAllVideos(context:context,
-                                listPlayId:
-                                    "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t",
-                              );
-                        });
-                      });
- *///
+
             WidgetsBinding.instance.addPostFrameCallback((_) async {
               if (NewSession.get("language", "") == "ar") {
                 ref
                     .watch(videoNotifierProvider.notifier)
-                    .getAllVideos(context:context,     
-      
-      
-      
-      
-                  listPlayId: "PLFky0QidIsRVNWtfMFszywLppLgTfa4I2",
-                );              } else {
+                    .getAllVideos(
+                      context: context,
+
+                      listPlayId: "PLFky0QidIsRVNWtfMFszywLppLgTfa4I2",
+                    );
+              } else {
                 ref
                     .watch(videoNotifierProvider.notifier)
-                    .getAllVideos(context:context,     
-      
-      
-      
-      
+                    .getAllVideos(
+                      context: context,
+
                       listPlayId: "PLFky0QidIsRXF6rZbVp4xe9ueBEec3Lnv",
                     );
               }
@@ -327,15 +271,17 @@ class TypeRowOfLevelThree extends ConsumerWidget {
           child: AnimatedOpacity(
             opacity:
                 ref.watch(currentPlayListIdNotifier) ==
-                        "PLFky0QidIsRXF6rZbVp4xe9ueBEec3Lnv" || ref.watch
-                  (currentPlayListIdNotifier) == "PLFky0QidIsRVNWtfMFszywLppLgTfa4I2"
+                            "PLFky0QidIsRXF6rZbVp4xe9ueBEec3Lnv" ||
+                        ref.watch(currentPlayListIdNotifier) ==
+                            "PLFky0QidIsRVNWtfMFszywLppLgTfa4I2"
                     ? 1.0
                     : 0.0,
             duration: const Duration(milliseconds: 200),
             child:
                 ref.watch(currentPlayListIdNotifier) ==
-                        "PLFky0QidIsRXF6rZbVp4xe9ueBEec3Lnv" || ref.watch
-    (currentPlayListIdNotifier) == "PLFky0QidIsRVNWtfMFszywLppLgTfa4I2"
+                            "PLFky0QidIsRXF6rZbVp4xe9ueBEec3Lnv" ||
+                        ref.watch(currentPlayListIdNotifier) ==
+                            "PLFky0QidIsRVNWtfMFszywLppLgTfa4I2"
                     ? const PointerTypeWidget()
                     : const SizedBox(),
           ),
@@ -348,17 +294,10 @@ class TypeRowOfLevelThree extends ConsumerWidget {
 }
 
 class TypeRowOfLevelFour extends ConsumerWidget {
-
   const TypeRowOfLevelFour({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String viewsLabel = SetLocalization.of(context)?.getTranslateValue("views") ?? "views";
-    String likesLabel = SetLocalization.of(context)?.getTranslateValue("likes") ?? "likes";
-    String MLabel = SetLocalization.of(context)?.getTranslateValue("M") ?? "M";
-    String KLabel = SetLocalization.of(context)?.getTranslateValue("K") ?? "K";
-    String minuteLabel = SetLocalization.of(context)?.getTranslateValue("minute") ?? "min";
-
     return Row(
       children: [
         VideosShowTypesTextButtonWidget(
@@ -366,51 +305,42 @@ class TypeRowOfLevelFour extends ConsumerWidget {
           onPressed: () {
             // ref.watch(isLevelFourNotifier.notifier).state = true;
             WidgetsBinding.instance.addPostFrameCallback((_) async {
-              ref
-                  .watch(videoNotifierProvider.notifier)
-                  .getAllVideos(context:context,     
-      
-      
-      
-      
-                    listPlayId: "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t",
-                  );
+              if (NewSession.get("language", "") == "ar") {
+                ref
+                    .watch(videoNotifierProvider.notifier)
+                    .getAllVideos(
+                  context: context,
+
+                  listPlayId: "PLFky0QidIsRU2stZpEjBgE85Ncvo92F4g",
+                );
+              } else {
+                ref
+                    .watch(videoNotifierProvider.notifier)
+                    .getAllVideos(
+                  context: context,
+
+                  listPlayId: "PLFky0QidIsRUOZNykwJTHb2he3ccEL0A6",
+                );
+              }
             });
-            // ref.watch(isLevelOneNotifier.notifier).state = false;
-            // ref.watch(isLevelTwoNotifier.notifier).state = false;
-            // ref.watch(isLevelThreeNotifier.notifier).state = false;
-            /*
-                      WidgetsBinding.instance.addPostFrameCallback((_) async {
-                        Future.microtask(() {
-                          if (NewSession.get("language", "") == "ar") {
-                            debugPrint("arabic");
-                          } else {
-                            debugPrint("english");
-                          }
-                          ref
-                              .watch(videoNotifierProvider.notifier)
-                              .getAllVideos(context:context,
-                                listPlayId:
-                                    "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t",
-                              );
-                        });
-                      });
- */
           },
         ),
         Padding(
           padding: const EdgeInsets.only(right: 5),
           child: AnimatedOpacity(
             opacity:
+            ref.watch(currentPlayListIdNotifier) ==
+                "PLFky0QidIsRU2stZpEjBgE85Ncvo92F4g" ||
                 ref.watch(currentPlayListIdNotifier) ==
-                        "PLiMj4nUvC2JhKASa"
-                            "QGaIEiPd_sNLw5I-t"
+                    "PLFky0QidIsRUOZNykwJTHb2he3ccEL0A6"
                     ? 1.0
                     : 0.0,
             duration: const Duration(milliseconds: 200),
             child:
+            ref.watch(currentPlayListIdNotifier) ==
+                "PLFky0QidIsRU2stZpEjBgE85Ncvo92F4g" ||
                 ref.watch(currentPlayListIdNotifier) ==
-                        "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t"
+                    "PLFky0QidIsRUOZNykwJTHb2he3ccEL0A6"
                     ? const PointerTypeWidget()
                     : const SizedBox(),
           ),

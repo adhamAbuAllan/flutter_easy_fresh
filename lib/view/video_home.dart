@@ -41,7 +41,6 @@ class _YouTubeHomePageState extends ConsumerState<YouTubeHomePage> {
         }
       });
 
-      debugPrint("scroll controller is listener");
     });
 
     // Fetch videos when the widget is initialized

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_easy_fresh/const/localization.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -58,6 +57,10 @@ class VideoFilterBarWidgetA extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final bool showUnder30 = ref.watch(didHaveUnder30Min);
+    final bool showBetween30And60 = ref.watch(didHaveBetween30And60Min);
+    final bool showAbove60 = ref.watch(didHaveOver60Min);
+
     // Access providers using ref.watch
     final filterProvider = ref.watch(videoFilterProvider.notifier);
     final selectedFilter = ref.watch(videoFilterProvider);
@@ -102,26 +105,28 @@ class VideoFilterBarWidgetA extends ConsumerWidget {
             },
           ),
           // "Under 30m" filter button
-          FilterButton(
+          if (showUnder30)
+            FilterButton(
             title: "under_30_m",
             isSelected: selectedFilter == EnumVideoDurationFilter.under30,
             onTap: () {
               filterProvider.updateFilter(EnumVideoDurationFilter.under30);
                 videoViewModel.getAllVideos(context:context,
-                  
-                  
-                  
-                  
-                  
+
+
+
+
+
                   listPlayId: ref.watch(currentPlayListIdNotifier),
                 );
               }
               //
               // Fetch and filter videos
           ),
-
+          //
           // "30-60m" filter button
-          FilterButton(
+          if (showBetween30And60)
+            FilterButton(
             title: "30_60_m",
             isSelected:
                 selectedFilter == EnumVideoDurationFilter.between30And60,
@@ -131,11 +136,11 @@ class VideoFilterBarWidgetA extends ConsumerWidget {
               );
               Future.microtask(() {
                 videoViewModel.getAllVideos(context:context,
-                  
-                  
-                  
-                  
-                  
+
+
+
+
+
                   listPlayId: ref.watch(currentPlayListIdNotifier),
                 );
               });
@@ -143,18 +148,19 @@ class VideoFilterBarWidgetA extends ConsumerWidget {
           ),
 
           // "Above 60m" filter button
-          FilterButton(
+          if (showAbove60)
+            FilterButton(
             title: "above_60_m",
             isSelected: selectedFilter == EnumVideoDurationFilter.above60,
             onTap: () {
               filterProvider.updateFilter(EnumVideoDurationFilter.above60);
               Future.microtask(() {
                 videoViewModel.getAllVideos(context:context,
-                  
-                  
-                  
-                  
-                  
+
+
+
+
+
                   listPlayId: ref.watch(currentPlayListIdNotifier),
                 );
               });

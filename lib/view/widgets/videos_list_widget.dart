@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easy_fresh/const/localization.dart';
+import 'package:flutter_easy_fresh/contoller/providers/video_provider.dart';
 import 'package:flutter_easy_fresh/view/widgets/types_of_list_videos_widgets/show_types_button_widget.dart';
 import 'package:flutter_easy_fresh/view/widgets/types_of_list_videos_widgets/types_of_videos_box_widget.dart';
 import 'package:flutter_easy_fresh/view/widgets/video_card.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../contoller/providers/color_provider.dart';
 import '../../contoller/providers/widgets_porvider.dart';
 import '../../session/new_session.dart';
+
 //
 // class VideosListWidget extends ConsumerStatefulWidget {
 //   const VideosListWidget({super.key});
@@ -185,10 +189,7 @@ class ListVideosWithTypeBtn extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return
-
-
-      GestureDetector(
+    return GestureDetector(
       onTap: () {
         ref.read(isBoxVisibleNotifier.notifier).state =
             !ref.read(isBoxVisibleNotifier);
@@ -202,8 +203,58 @@ class ListVideosWithTypeBtn extends ConsumerWidget {
                 : Alignment.topRight,
         children: [
           YouTubeVideoCard(scrollController: scrollController),
-          ShowTypesButtonWidget(text: "level_of_list",),
+          ShowTypesButtonWidget(text: "level_of_list"),
           const ShowVideosTypesBoxWidget(), // list of types
+          ref.watch(videoNotifierProvider).loading
+?          Center(child: Text(SetLocalization.of(context)!.getTranslateValue("this_progress_take_an_1_to_3_minutes"),style: TextStyle(color: ref.read
+            (themeModeNotifier
+              .notifier).textTheme(ref: ref)),),):SizedBox(),
+          ref.watch(videoNotifierProvider).loading              ?
+          Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom + 70,
+                ),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    height: 50,
+                    width: 150,
+                  decoration:
+                  BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                      color: ref
+                          .read(themeModeNotifier.notifier)
+                          .backgroundAppTheme(ref: ref)
+                  ),
+
+
+                    //here should to use the linear progress that load according
+                    child: LinearProgressIndicator(
+                      semanticsLabel: SetLocalization.of(context)!
+                          .getTranslateValue("loading..."),
+                      borderRadius: BorderRadius.circular(30),
+                      color: ref.read(themeModeNotifier.notifier).primaryTheme(ref: ref),
+                      value: ref.watch(videoNotifierProvider).progressValue,
+                    ),
+                  ),
+                ),
+              )
+              : SizedBox(),
+
+          ref.watch(videoNotifierProvider).loading
+              ? Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom + 30,
+                ),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Text(SetLocalization.of(context)!
+                      .getTranslateValue("loading"
+                  "..."),style: TextStyle(color: ref.read(themeModeNotifier
+                  .notifier).textTheme(ref: ref)),),
+                ),
+              )
+              : SizedBox(),
         ],
       ),
     );

@@ -141,17 +141,18 @@ class ArabicButton extends ConsumerWidget {
             switch (currentId) {
               case 'PLFky0QidIsRXWOwxtSerlqeRtaHM7XMt_': // Replace with actual ID
                 WidgetsBinding.instance.addPostFrameCallback((_) async {
-                  ref
+                 await ref
                       .watch(videoNotifierProvider.notifier)
                       .getAllVideos(
                         context: context,
                         listPlayId: "PLFky0QidIsRVe6LCB_AmakRBALyqDOdN9",
+                   //PLFky0QidIsRVe6LCB_AmakRBALyqDOdN9
                       );
                 });
                 break;
               case 'PLFky0QidIsRX9imrxA4cmg_FcY9h9TTWH': // Replace with actual ID
                 WidgetsBinding.instance.addPostFrameCallback((_) async {
-                  ref
+                await  ref
                       .watch(videoNotifierProvider.notifier)
                       .getAllVideos(
                         context: context,
@@ -162,7 +163,7 @@ class ArabicButton extends ConsumerWidget {
                 break;
               case 'PLFky0QidIsRXF6rZbVp4xe9ueBEec3Lnv': // Replace with actual ID
                 WidgetsBinding.instance.addPostFrameCallback((_) async {
-                  ref
+                await  ref
                       .watch(videoNotifierProvider.notifier)
                       .getAllVideos(
                         context: context,
@@ -171,14 +172,14 @@ class ArabicButton extends ConsumerWidget {
                       );
                 });
                 break;
-              case 'PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t': // Replace with actual ID
+              case 'PLFky0QidIsRUOZNykwJTHb2he3ccEL0A6': // Replace with actual ID
                 WidgetsBinding.instance.addPostFrameCallback((_) async {
-                  ref
+                await  ref
                       .watch(videoNotifierProvider.notifier)
                       .getAllVideos(
                         context: context,
 
-                        listPlayId: "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t",
+                        listPlayId: "PLFky0QidIsRU2stZpEjBgE85Ncvo92F4g",
                       );
                 });
                 break;
@@ -276,7 +277,7 @@ class EnglishButton extends ConsumerWidget {
             switch (currentId) {
               case 'PLFky0QidIsRVe6LCB_AmakRBALyqDOdN9': // Replace with actual ID
                 WidgetsBinding.instance.addPostFrameCallback((_) async {
-                  ref
+                await  ref
                       .watch(videoNotifierProvider.notifier)
                       .getAllVideos(
                         context: context,
@@ -287,7 +288,7 @@ class EnglishButton extends ConsumerWidget {
                 break;
               case 'PLFky0QidIsRU6hwTIVSUSIGHw-3iPBlHy': // Replace with actual ID
                 WidgetsBinding.instance.addPostFrameCallback((_) async {
-                  ref
+              await    ref
                       .watch(videoNotifierProvider.notifier)
                       .getAllVideos(
                         context: context,
@@ -298,7 +299,7 @@ class EnglishButton extends ConsumerWidget {
                 break;
               case 'PLFky0QidIsRVNWtfMFszywLppLgTfa4I2': // Replace with actual ID
                 WidgetsBinding.instance.addPostFrameCallback((_) async {
-                  ref
+               await   ref
                       .watch(videoNotifierProvider.notifier)
                       .getAllVideos(
                         context: context,
@@ -307,14 +308,14 @@ class EnglishButton extends ConsumerWidget {
                       );
                 });
                 break;
-              case 'PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t': // Replace with actual ID
+              case 'PLFky0QidIsRU2stZpEjBgE85Ncvo92F4g': // Replace with actual ID
                 WidgetsBinding.instance.addPostFrameCallback((_) async {
-                  ref
+               await   ref
                       .watch(videoNotifierProvider.notifier)
                       .getAllVideos(
                         context: context,
 
-                        listPlayId: "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t",
+                        listPlayId: "PLFky0QidIsRUOZNykwJTHb2he3ccEL0A6",
                       );
                 });
                 break;

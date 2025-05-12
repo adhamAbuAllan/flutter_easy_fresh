@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../api/yt_video.dart';
+import '../../api/video_model.dart';
 import '../../contoller/providers/color_provider.dart';
 
 class VideoDetailsBottomSheet extends ConsumerWidget {

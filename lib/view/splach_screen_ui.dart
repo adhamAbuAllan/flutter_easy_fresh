@@ -7,6 +7,7 @@ import 'package:flutter_easy_fresh/contoller/providers/language_proivder.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../const/strings.dart';
+import '../contoller/providers/video_provider.dart';
 import '../session/new_session.dart';
 
 class SplashScreenUi extends ConsumerStatefulWidget {
@@ -21,49 +22,62 @@ class _SplashScreenState extends ConsumerState<SplashScreenUi> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      ref.read(themeModeNotifier.notifier).loadThemeMode();
+      themeMode.loadValue();
+
       ref.read(languageNotifier.notifier);
-      if(NewSession.get("language", "").isEmpty){
+      if (NewSession.get("language", "").isEmpty) {
         NewSession.save("language", "ar");
       }
-      ref.read(themeModeNotifier.notifier).loadThemeMode();
+      await navigateToHome();
 
     });
-    themeMode.loadValue();
-    navigateToHome();
+    // Navigator.pushReplacementNamed(context, MyPagesRoutes.main);
+
   }
 
   @override
-  Widget build(
-    BuildContext context,
-  ) {
+  Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color(0x2ef0f0fe),
-        body: ColorfulSafeArea(
-          bottomColor: Colors.transparent,
-          color: ref.read(themeModeNotifier.notifier).primaryTheme(ref: ref),
-          child: const SingleChildScrollView(
-              child: Center(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                Image(
-                  image: AssetImage(
-                      "assets/images/splash screen heigh qulity with large size.png"),
-                )
-              ]))),
-        ));
+      backgroundColor: ref.read(themeModeNotifier.notifier).containerTheme(ref: ref),
+      body: ColorfulSafeArea(
+        bottomColor: Colors.transparent,
+        color: ref.read(themeModeNotifier.notifier).primaryTheme(ref: ref),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+
+                CircularProgressIndicator(
+                  color: ref
+                      .read(themeModeNotifier.notifier)
+                      .primaryTheme(ref: ref),
+                ),
+                Text("loading...",
+                    style: TextStyle(
+                      color: ref
+                          .read(themeModeNotifier.notifier)
+                          .textTheme(ref: ref),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Cairo",
+                ))
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   Future<void> navigateToHome() async {
-    Future.delayed(const Duration(milliseconds: 1700), () {
-      NewSession.get("isFirstTime", "") != "OK"
-          ? NewSession.save("language", "ar")
-          : null;
-      // NewSession.get('isFirstTime', "") != "OK"
-          // ? Navigator.pushReplacementNamed(context, MyPagesRoutes.introScreen)
-          // :
-      Navigator.pushReplacementNamed(context, MyPagesRoutes.main);
+    // Check if it's the first time
+    if (NewSession.get("isFirstTime", "") != "OK") {
+      NewSession.save("language", "ar");
+    }
 
-    });
+    // Use addPostFrameCallback without awaiting
+
   }
 }

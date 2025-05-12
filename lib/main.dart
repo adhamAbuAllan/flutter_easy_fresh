@@ -7,11 +7,13 @@ import 'package:flutter_easy_fresh/contoller/providers/video_provider.dart';
 import 'package:flutter_easy_fresh/session/new_session.dart';
 import 'package:flutter_easy_fresh/view/splach_screen_ui.dart';
 import 'package:flutter_easy_fresh/view/video_home.dart';
- import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'api/video_model.dart';
 import 'const/get_it_controller.dart';
 import 'const/localization.dart';
 import 'const/nums.dart';
@@ -24,6 +26,8 @@ final Future<SharedPreferences> sp = SharedPreferences.getInstance();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NewSession.init();
+  await Hive.initFlutter();
+  Hive.registerAdapter(VideoModelAdapter()); // Register the adapter
 
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -86,9 +90,10 @@ class _MyAppState extends ConsumerState<MyApp> {
         useMaterial3: false,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const
+      home:
+      // MyHomePage(title: ""),
+      const
       // ABCDEFG(),
-
       YouTubeHomePage(),
       localizationsDelegates: const [
         SetLocalization.localizationsDelegate,
@@ -326,11 +331,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   void _incrementCounter() {
     setState(() {

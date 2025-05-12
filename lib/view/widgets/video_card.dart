@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easy_fresh/const/localization.dart';
+import 'package:flutter_easy_fresh/contoller/methods/video_parent_notifier.dart';
+import 'package:flutter_easy_fresh/session/new_session.dart';
 import 'package:flutter_easy_fresh/view/widgets/video_card_skeleton.dart';
 import 'package:flutter_easy_fresh/view/widgets/video_details_bottom_sheet.dart';
 import 'package:flutter_easy_fresh/view/widgets/video_filter_bar_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../api/yt_video.dart';
+import '../../api/video_model.dart';
 import '../../contoller/providers/color_provider.dart';
 import '../../contoller/providers/video_provider.dart';
 import '../video_player_ui.dart';
@@ -24,17 +26,26 @@ class _YouTubeVideoCardState extends ConsumerState<YouTubeVideoCard> {
   @override
   void initState() {
     super.initState();
-
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      Future.microtask(() {
-        ref
+      if(NewSession.get("playListId", "PLFky0QidIsRVe6LCB_AmakRBALyqDOdN9").isNotEmpty){
+        await ref
             .read(videoNotifierProvider.notifier)
             .getAllVideos(
-              context: context,
-              listPlayId: "PLiMj4nUvC2JhKASaQGaIEiPd_sNLw5I-t",
-            );
-      });
+          context: context,
+          listPlayId: NewSession.get("playListId", "PLFky0QidIsRVe6LCB_AmakRBALyqDOdN9"),
+        );
+      }else{
+        await ref
+            .read(videoNotifierProvider.notifier)
+            .getAllVideos(
+          context: context,
+          listPlayId: "PLFky0QidIsRVe6LCB_AmakRBALyqDOdN9",
+        );
+      }
+
+
     });
+    NewSession.save("isFirstTime", "OK");
   }
 
   @override
@@ -47,13 +58,17 @@ class _YouTubeVideoCardState extends ConsumerState<YouTubeVideoCard> {
       slivers: [
         // Add SliverAppBar for app bar behavior
         SliverAppBar(
-          backgroundColor: ref.read(themeModeNotifier.notifier).backgroundAppTheme(ref: ref),
+          backgroundColor: ref
+              .read(themeModeNotifier.notifier)
+              .backgroundAppTheme(ref: ref),
           leading: SizedBox(),
-          expandedHeight: 50, // Adjust the height as needed
-          floating: true, // Makes the app bar visible as soon as the user scrolls
-          pinned: false, // Keeps the app bar visible when scrolled up
+          expandedHeight: 50,
+          // Adjust the height as needed
+          floating: true,
+          // Makes the app bar visible as soon as the user scrolls
+          pinned: false,
+          // Keeps the app bar visible when scrolled up
           flexibleSpace: FlexibleSpaceBar(
-
             background: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               controller: ref.watch(horizontalScrollController),
@@ -63,46 +78,34 @@ class _YouTubeVideoCardState extends ConsumerState<YouTubeVideoCard> {
         ),
 
         // Check if video state is loading, if yes show skeleton, else show list of videos
-        if(videoState.playListItems?.isEmpty??true && !videoState.loading)
-        SliverToBoxAdapter(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              //no data icon , result is not found icon
-
-              Icon(Icons.cancel_presentation,size: 100,color: ref.read(themeModeNotifier
-                  .notifier).textTheme(ref: ref),),
-              Text("not found duration",style: TextStyle(color: ref.read
-              (themeModeNotifier.notifier).textTheme(ref: ref)
-
-              ),)],
-          ),
-        ),
+        //   if (videoState.playListItems?.isEmpty ?? false)
         videoState.loading
-            ? SkeletonHomeUi(hasCitiesBar: false)
+            ? SliverToBoxAdapter(child: SizedBox())
+            // SkeletonHomeUi(hasCitiesBar: false)
+            //
             : SliverList(
-          delegate: SliverChildBuilderDelegate(
-            childCount: videoState.playListItems?.length,
+              delegate: SliverChildBuilderDelegate(
+                childCount: videoState.playListItems?.length,
                 (context, index) {
-              final ytVideo = videoState.playListItems?[index];
-              return RepaintBoundary(
-                child: VideoCard(
-                  videoModel: ytVideo ??
-                      VideoModel(
-                        videoId: "",
-                        videoTitle: "",
-                        thumbnailUrl: "",
-                        viewsCount: "",
-                        likesCount: '',
-                        videoDescription: '',
-                      ),
-                ),
-              );
-            },
-          ),
-        ),
+                  final ytVideo = videoState.playListItems?[index];
+                  return RepaintBoundary(
+                    child: VideoCard(
+                      videoModel:
+                          ytVideo ??
+                          VideoModel(
+                            videoId: "",
+                            videoTitle: "",
+                            thumbnailUrl: "",
+                            viewsCount: "",
+                            likesCount: '',
+                            videoDescription: '',
+                            videoDuration: '',
+                          ),
+                    ),
+                  );
+                },
+              ),
+            ),
       ],
     );
   }
@@ -145,7 +148,10 @@ class VideoCard extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(7),
-          color: ref.read(themeModeNotifier.notifier).containerTheme(ref: ref).withAlpha(200),
+          color: ref
+              .read(themeModeNotifier.notifier)
+              .containerTheme(ref: ref)
+              .withAlpha(200),
         ),
         child: Column(
           spacing: 10,
@@ -172,7 +178,8 @@ class VideoCard extends ConsumerWidget {
                   fontWeight: FontWeight.bold,
                   color: ref
                       .read(themeModeNotifier.notifier)
-                      .textTheme(ref: ref).withAlpha(200),
+                      .textTheme(ref: ref)
+                      .withAlpha(200),
                 ),
               ),
             ),
@@ -185,7 +192,8 @@ class VideoCard extends ConsumerWidget {
                     Icons.thumb_up, // Your icon of choice
                     color: ref
                         .read(themeModeNotifier.notifier)
-                        .textTheme(ref: ref).withAlpha(200),
+                        .textTheme(ref: ref)
+                        .withAlpha(200),
                     // const Color(0xfdfCfCfC),
                   ),
                   const SizedBox(width: 3),
@@ -194,7 +202,8 @@ class VideoCard extends ConsumerWidget {
                     style: TextStyle(
                       color: ref
                           .read(themeModeNotifier.notifier)
-                          .textTheme(ref: ref).withAlpha(200),
+                          .textTheme(ref: ref)
+                          .withAlpha(200),
                       // const Color(0xfdfCfCfC),
                       fontSize: 16,
                     ),
@@ -203,12 +212,14 @@ class VideoCard extends ConsumerWidget {
               ),
             ),
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 showModalBottomSheet(
                   context: context,
 
                   shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(16),
+                    ),
                   ),
                   builder: (context) {
                     return VideoDetailsBottomSheet(videoModel: videoModel);
@@ -224,7 +235,8 @@ class VideoCard extends ConsumerWidget {
                       Icons.remove_red_eye, // Your icon of choice
                       color: ref
                           .read(themeModeNotifier.notifier)
-                          .textTheme(ref: ref).withAlpha(200),
+                          .textTheme(ref: ref)
+                          .withAlpha(200),
                       // const Color(0xfdfCfCfC),
                     ),
                     const SizedBox(width: 3),
@@ -235,19 +247,20 @@ class VideoCard extends ConsumerWidget {
                           style: TextStyle(
                             color: ref
                                 .read(themeModeNotifier.notifier)
-                                .textTheme(ref: ref).withAlpha(200),
+                                .textTheme(ref: ref)
+                                .withAlpha(200),
                             // const Color(0xfdfCfCfC)
                           ),
-                        ),                 Text(
+                        ),
+                        Text(
                           "${SetLocalization.of(context)?.getTranslateValue("more")}",
                           style: TextStyle(
                             color: ref
                                 .read(themeModeNotifier.notifier)
-                                .textTheme(ref: ref)
+                                .textTheme(ref: ref),
                             // const Color(0xfdfCfCfC)
                           ),
                         ),
-
                       ],
                     ),
                     const Expanded(child: SizedBox()),
@@ -256,7 +269,8 @@ class VideoCard extends ConsumerWidget {
                       Icons.access_time,
                       color: ref
                           .read(themeModeNotifier.notifier)
-                          .textTheme(ref: ref).withAlpha(200),
+                          .textTheme(ref: ref)
+                          .withAlpha(200),
                       // const Color(0xfdfCfCfC),
                     ),
                     const SizedBox(width: 3),
@@ -265,7 +279,8 @@ class VideoCard extends ConsumerWidget {
                       style: TextStyle(
                         color: ref
                             .read(themeModeNotifier.notifier)
-                            .textTheme(ref: ref).withAlpha(200),
+                            .textTheme(ref: ref)
+                            .withAlpha(200),
                         // const Color(0xfdfCfCfC)
                       ),
                     ),
