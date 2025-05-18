@@ -1,16 +1,17 @@
 # flutter_easy_fresh
 
-A new Flutter project.
+- Screens:
 
-## Getting Started
+![App Screenshot](https://drive.google.com/uc?export=view&id=1BTyRY-WuS0q80y2Uhwr8xXejsoUWCLJe)
 
-This project is a starting point for a Flutter application.
+![App Screenshot](https://drive.google.com/uc?export=view&id=1w5F145UiyZsUbpq7M5rBk0l9HDyBQYye)
 
-A few resources to get you started if this is your first Flutter project:
+![App Screenshot](https://drive.google.com/uc?export=view&id=1VMjeHD0gRQG7lAqnwEbwcicJgG7UtAKM)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+![App Screenshot](https://drive.google.com/uc?export=view&id=1mSDBoAkdqA72UGxs1JdFTvwQpQOnJStZ)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![App Screenshot](https://drive.google.com/uc?export=view&id=1JWdKQ9DeynBfgXv9Z4pRfLGZMMLjPh7-)
+
+![App Screenshot](https://drive.google.com/uc?export=view&id=1vgsjXVVJLUPqx_PLpjji6ZesKZrxQDvI)
+
+![App Screenshot](https://drive.google.com/uc?export=view&id=1rrh7HrvobRxCpX-1HHGrwmxF0A07-o3W)
